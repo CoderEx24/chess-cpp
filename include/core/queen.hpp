@@ -1,0 +1,16 @@
+#ifndef QUEEN_H
+#define QUEEN_H
+
+#include "abstract_chess_piece.hpp"
+
+class Queen : public AbstractChessPiece
+{
+	public:
+		Queen(): AbstractChessPiece() {}
+		Queen(int x, int y, PieceColor c): AbstractChessPiece(x, y, c) {}
+
+		std::vector<Position> get_valid_positions(bool **occupied_positions) override;
+};
+
+#endif
+
