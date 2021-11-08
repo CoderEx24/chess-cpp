@@ -1,6 +1,8 @@
 #ifndef ABSTRACT_CHESS_PIECE_H
 #define ABSTRACT_CHESS_PIECE_H
 
+#include <vector>
+
 enum PieceColor { Black, White };
 
 struct Position
@@ -27,8 +29,9 @@ class AbstractChessPiece
 
 		Position get_position() const { return this->pos; }
 		PieceColor get_color() const { return this->color; }
-
-		virtual bool is_valid_position(bool **occupied_positions) = 0;
+		
+		// this function should return a list of absolute positions that the chess piece can occupy
+		virtual std::vector<Position> get_valid_positions(bool **occupied_positions) = 0;
 
 };
 
