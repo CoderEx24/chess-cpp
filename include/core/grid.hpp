@@ -21,14 +21,14 @@ class Grid
 	void check_king_for_threats();
 
 	public:
-		Grid(): current_turn(PieceColor::White), threatened_king(nullptr) { init_grid(); }
+		Grid(): current_turn(WHITE), threatened_king(nullptr) { init_grid(); }
 		Grid(PieceColor turn): current_turn(turn), threatened_king(nullptr) { init_grid(); }
 		
 		bool is_game_over() const { return this->game_over; }
 		PieceColor get_winner() const { return this->winner; }
 
-		void move(Position piece, Position dest);
-		std::vector<Position> get_possible_moves(Position piece);
+		void move(const Position& piece, const Position& dest);
+		const std::vector<Position>& get_possible_moves(const Position& piece);
 				
 };
 
