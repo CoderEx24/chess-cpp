@@ -6,7 +6,15 @@
 #define WHITE 0
 #define BLACK 1
 
+#define PAWN 	0x0
+#define ROOK 	0x1
+#define BISHOP 	0x2
+#define KNIGHT 	0x3
+#define QUEEN 	0x4
+#define KING 	0x5
+
 using PieceColor = unsigned short;
+using PieceType  = unsigned short;
 
 struct Position
 {
@@ -38,6 +46,22 @@ class AbstractChessPiece
 		// this function should return a list of absolute positions that the chess piece can occupy
 		virtual const std::vector<Position>& get_valid_positions(bool **occupied_positions) = 0;
 
+	friend class FakeChessPiece;
+};
+
+class FakeChessPiece
+{
+	const AbstractChessPiece *piece;
+	PieceType type;
+
+	public:
+		FakeChessPiece(const AbstractChessPiece *p);
+
+		PieceType get_type() const { return type; }
+		PieceColor get_color() const { return piece->color; }
+		const Position& get_position() const { return piece->pos; }
+		
+		bool is_valid();
 };
 
 #endif
