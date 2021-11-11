@@ -1,7 +1,7 @@
 #ifndef KNIGHT_H
 #define KNIGHT_H
 
-#include "abstract_chess_piece.hpp"
+#include "core/abstract_chess_piece.hpp"
 
 class Knight : public AbstractChessPiece
 {

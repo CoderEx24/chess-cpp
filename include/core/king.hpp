@@ -1,7 +1,7 @@
 #ifndef KING_H
 #define KING_H
 
-#include "abstract_chess_piece.hpp"
+#include "core/abstract_chess_piece.hpp"
 
 class King : public AbstractChessPiece
 {

@@ -1,7 +1,7 @@
 #ifndef QUEEN_H
 #define QUEEN_H
 
-#include "abstract_chess_piece.hpp"
+#include "core/abstract_chess_piece.hpp"
 
 class Queen : public AbstractChessPiece
 {

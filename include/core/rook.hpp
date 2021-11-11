@@ -1,7 +1,7 @@
 #ifndef ROOK_H
 #define ROOK_H
 
-#include "abstract_chess_piece.hpp"
+#include "core/abstract_chess_piece.hpp"
 
 class Rook : public AbstractChessPiece
 {

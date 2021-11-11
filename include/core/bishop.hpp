@@ -1,7 +1,7 @@
 #ifndef BISHOP_H
 #define BISHOP_H
 
-#include "abstract_chess_piece.hpp"
+#include "core/abstract_chess_piece.hpp"
 
 class Bishop : public AbstractChessPiece
 {
