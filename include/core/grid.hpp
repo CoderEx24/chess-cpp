@@ -12,8 +12,8 @@
 class Grid
 {
 	AbstractChessPiece *grid[8][8];
-	bool occupied_positions[8][8];
-	PieceColor current_turn;
+	bool occupied_positions[8][8], game_over;
+	PieceColor current_turn, winner;
 	King *threatened_king, *white_king, *black_king;
 	std::vector<Position> current_possible_moves;
 
@@ -23,8 +23,13 @@ class Grid
 	public:
 		Grid(): current_turn(PieceColor::White), threatened_king(nullptr) { init_grid(); }
 		Grid(PieceColor turn): current_turn(turn), threatened_king(nullptr) { init_grid(); }
+		
+		bool is_game_over() const { return this->game_over; }
+		PieceColor get_winner() const { return this->winner; }
 
-		void update(int x, int y);
+		void move(Position piece, Position dest);
+		std::vector<Position> get_possible_moves(Position piece);
+				
 };
 
 #endif
