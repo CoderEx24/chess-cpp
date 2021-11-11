@@ -3,8 +3,10 @@ cmake_minimum_required(VERSION 3.10)
 project(chess-cpp VERSION 0.1)
 
 find_package(SFML REQUIRED system window graphics network audio)
+find_package(CppUTest REQUIRED)
 
 set(CMAKE_CXX_COMPILER clang++)
+set(TEST_SOURCE_DIR "${PROJECT_SOURCE_DIR}/tests")
 set(PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
 add_executable(chess 
@@ -19,6 +21,35 @@ add_executable(chess
 	${PROJECT_SOURCE_DIR}/ui/main_window.cpp
 )
 
+add_executable(tests 
+	${PROJECT_SOURCE_DIR}/core/pawn.cpp
+	${PROJECT_SOURCE_DIR}/core/rook.cpp
+	${PROJECT_SOURCE_DIR}/core/knight.cpp
+	${PROJECT_SOURCE_DIR}/core/bishop.cpp
+	${PROJECT_SOURCE_DIR}/core/queen.cpp
+	${PROJECT_SOURCE_DIR}/core/king.cpp
+	${PROJECT_SOURCE_DIR}/core/grid.cpp
+	${TEST_SOURCE_DIR}/test_pawn.cpp
+	${TEST_SOURCE_DIR}/test_rook.cpp
+	${TEST_SOURCE_DIR}/test_bishop.cpp
+	${TEST_SOURCE_DIR}/test_knight.cpp
+	${TEST_SOURCE_DIR}/test_queen.cpp
+	${TEST_SOURCE_DIR}/test_king.cpp
+	${TEST_SOURCE_DIR}/test_grid.cpp
+	${TEST_SOURCE_DIR}/test_main.cpp
+)
+
+target_link_libraries(tests PUBLIC
+	CppUTest
+	CppUTestExt
+)
+
+target_include_directories(tests PUBLIC
+	/usr/include
+	/usr/local/include
+	${PROJECT_SOURCE_DIR}/include
+)
+
 target_link_libraries(chess PUBLIC
 	${SFML_LIBRARIES}
 )
@@ -28,5 +59,3 @@ target_include_directories(chess PUBLIC
 	/usr/local/include
 	${PROJECT_SOURCE_DIR}/include
 )
-
-
