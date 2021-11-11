@@ -4,12 +4,10 @@ project(chess-cpp VERSION 0.1)
 
 find_package(SFML REQUIRED system window graphics network audio)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_COMPILER clang++)
 set(PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
 add_executable(chess 
-	${PROJECT_SOURCE_DIR}/core/abstract_chess_piece.cpp
 	${PROJECT_SOURCE_DIR}/core/pawn.cpp
 	${PROJECT_SOURCE_DIR}/core/rook.cpp
 	${PROJECT_SOURCE_DIR}/core/knight.cpp
