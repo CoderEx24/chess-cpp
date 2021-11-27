@@ -3,7 +3,6 @@
 
 class DummyPawn : public Pawn
 {
-	friend class TestPawn;
 	public: 
 		DummyPawn(): Pawn() {}
 		DummyPawn(int x, int y, PieceColor c = WHITE): Pawn(x, y, c) {}
