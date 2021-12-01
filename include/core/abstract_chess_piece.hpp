@@ -3,8 +3,9 @@
 
 #include <vector>
 
-#define WHITE 0
-#define BLACK 1
+#define EMPTY 0
+#define WHITE 1
+#define BLACK 2
 
 #define PAWN 	0x0
 #define ROOK 	0x1
@@ -44,7 +45,7 @@ class AbstractChessPiece
 		PieceColor get_color() const { return this->color; }
 		
 		// this function should return a list of absolute positions that the chess piece can occupy
-		virtual const std::vector<Position>& get_valid_positions(bool **occupied_positions) = 0;
+		virtual const std::vector<Position>& get_valid_positions(PieceColor **occupied_positions) = 0;
 
 	friend class FakeChessPiece;
 };

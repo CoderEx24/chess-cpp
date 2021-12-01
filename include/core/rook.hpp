@@ -9,7 +9,7 @@ class Rook : public AbstractChessPiece
 		Rook(): AbstractChessPiece() {}
 		Rook(int x, int y, PieceColor c): AbstractChessPiece(x, y, c) {}
 
-		const std::vector<Position>& get_valid_positions(bool **occupied_positions) override;
+		const std::vector<Position>& get_valid_positions(PieceColor **occupied_positions) override;
 };
 
 #endif

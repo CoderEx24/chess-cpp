@@ -9,7 +9,6 @@
 #include "core/queen.hpp"
 #include "core/king.hpp"
 
-
 class Grid
 {
 	AbstractChessPiece *grid[8][8];
