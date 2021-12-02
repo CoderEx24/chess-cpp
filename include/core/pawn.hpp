@@ -12,7 +12,7 @@ class Pawn : public AbstractChessPiece
 		Pawn(): AbstractChessPiece(), is_first_move(true) {}
 		Pawn(int x, int y, PieceColor c): AbstractChessPiece(x, y, c), is_first_move(true) {}
 
-		const std::vector<Position>& get_valid_positions(PieceColor **occupied_positions) override;
+		const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) override;
 
 };
 

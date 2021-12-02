@@ -16,6 +16,7 @@
 
 using PieceColor = unsigned short;
 using PieceType  = unsigned short;
+using FakeGrid   = PieceColor**;
 
 struct Position
 {
@@ -45,7 +46,7 @@ class AbstractChessPiece
 		PieceColor get_color() const { return this->color; }
 		
 		// this function should return a list of absolute positions that the chess piece can occupy
-		virtual const std::vector<Position>& get_valid_positions(PieceColor **occupied_positions) = 0;
+		virtual const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) = 0;
 
 	friend class FakeChessPiece;
 };
