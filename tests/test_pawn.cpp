@@ -22,8 +22,6 @@ TEST_GROUP(TestPawn)
 		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
 	};
 
-	TEST_SETUP();
-	TEST_TEARDOWN();
 };
 
 TEST(TestPawn, test_pawn_movement_before_first_move)
