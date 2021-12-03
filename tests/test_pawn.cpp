@@ -1,5 +1,6 @@
 #include <CppUTest/TestHarness.h>
 #include "core/pawn.hpp"
+#include "test_common.hpp"
 
 class DummyPawn : public Pawn
 {
@@ -32,9 +33,9 @@ TEST(TestPawn, test_pawn_movement_before_first_move)
 	CHECK(white_pawn.get_is_first_move());
 	
 	std::vector<Position> possible_moves(white_pawn.get_valid_positions((FakeGrid) occupied_positions));
-	CHECK(possible_moves.size() == 2);
-	CHECK(possible_moves[0] == Position(5, 0));
-	CHECK(possible_moves[1] == Position(4, 0));
+	CHECK_EQUAL(possible_moves.size(), 2);
+	CHECK_EQUAL(possible_moves[0], Position(5, 0));
+	CHECK_EQUAL(possible_moves[1], Position(4, 0));
 
 	// Testing black pawn
 	DummyPawn black_pawn(1, 0, BLACK);
@@ -42,9 +43,9 @@ TEST(TestPawn, test_pawn_movement_before_first_move)
 	CHECK(black_pawn.get_is_first_move());
 
 	possible_moves = black_pawn.get_valid_positions((FakeGrid) occupied_positions);
-	CHECK(possible_moves.size() == 2);
-	CHECK(possible_moves[0] == Position(2, 0));
-	CHECK(possible_moves[1] == Position(3, 0));
+	CHECK_EQUAL(possible_moves.size(), 2);
+	CHECK_EQUAL(possible_moves[0], Position(2, 0));
+	CHECK_EQUAL(possible_moves[1], Position(3, 0));
 
 }
 
@@ -58,8 +59,8 @@ TEST(TestPawn, test_pawn_movement_after_first_move)
 	CHECK(!pawn.get_is_first_move());
 	
 	std::vector<Position> possible_moves(pawn.get_valid_positions((FakeGrid) occupied_positions));
-	CHECK(possible_moves.size() == 1);
-	CHECK(possible_moves[0] == Position(4, 0));
+	CHECK_EQUAL(possible_moves.size(), 1);
+	CHECK_EQUAL(possible_moves[0], Position(4, 0));
 
 	// Testing black pawn
 	DummyPawn black_pawn(1, 2, BLACK);
@@ -69,7 +70,7 @@ TEST(TestPawn, test_pawn_movement_after_first_move)
 	CHECK(!black_pawn.get_is_first_move());
 
 	possible_moves = black_pawn.get_valid_positions((FakeGrid) occupied_positions);
-	CHECK(possible_moves.size() == 1);
-	CHECK(possible_moves[0] == Position(2, 2));
+	CHECK_EQUAL(possible_moves.size(), 1);
+	CHECK_EQUAL(possible_moves[0], Position(2, 2));
 }
 
