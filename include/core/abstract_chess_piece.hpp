@@ -1,6 +1,7 @@
 #ifndef ABSTRACT_CHESS_PIECE_H
 #define ABSTRACT_CHESS_PIECE_H
 
+#include <string>
 #include <vector>
 
 #define EMPTY 0
@@ -26,6 +27,9 @@ struct Position
 
 	bool operator==(const Position& rhs) { return x == rhs.x && y == rhs.y; }
 	bool operator!=(const Position& rhs) { return x != rhs.x || y != rhs.y; }
+#ifdef DEBUG
+	const std::string& StringFrom() { return "(" + std::to_string(this.x) + ", " + std::to_string(this.y) + ")"}
+#endif
 };
 
 class AbstractChessPiece
