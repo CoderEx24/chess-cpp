@@ -2,6 +2,43 @@
 #include "core/queen.hpp"
 #include "test_common.hpp"
 
+// Queen test case
+// The Queen can move in all 8 directions, as far as it can
+// this means that the Queen can by modelled as a pawn and a bishop at the same time
+//
+// this test case provides 2 sets of tests.
+// 
+// The Normal Implementation tests
+// -------------------------------
+// these tests assume that the code generates the possible moves by itself
+// the moves are ordered by starting from the north, going clockwise
+//
+//  \   |   /
+//   \  |  /
+//    8 1 2
+//     \|/
+// ---7-Q-3---
+//     /|\
+//    6 5 4
+//   /  |  \
+//  /   |   \
+//
+//  The Eazy Implementation tests
+//  -----------------------------
+//  these tests assume that the code reuses rook and bishop's code.
+//  the moves of the rook are tested first, then the moves of the bishop.
+//
+//   \   |   /
+//    \  |  /
+//     8 1 5
+//      \|/
+//  ---4-Q-2---
+//      /|\
+//     7 3 6
+//    /  |  \
+//   /   |   \
+//
+
 TEST_GROUP(TestQueen)
 {
 	PieceColor occupied_positions[8][8] = {
@@ -20,8 +57,8 @@ TEST_GROUP(TestQueen)
 
 #ifdef QUEEN_EZ_IMP
 
-IGNORE_TEST(TestQueen, test_case_1_normal_implementation)
-IGNORE_TEST(TestQueen, test_case_2_normal_implementation)
+IGNORE_TEST(TestQueen, test_case_1_normal_implementation) {}
+IGNORE_TEST(TestQueen, test_case_2_normal_implementation) {}
 
 #else
 

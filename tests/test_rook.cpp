@@ -2,6 +2,22 @@
 #include "core/rook.hpp"
 #include "test_common.hpp"
 
+// Rook test case
+// The rook can move in straight lines, as far as it can.
+//
+// the moves are ordered starting with the north direction.
+// and then going clockwise.
+//
+//      |
+//      |
+//      1
+//      |
+// ---4-R-2---
+//      |
+//      3
+//      |
+//      |
+
 TEST_GROUP(TestRook)
 {
 	PieceColor occupied_positions[8][8] = {

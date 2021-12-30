@@ -2,6 +2,22 @@
 #include "core/bishop.hpp"
 #include "test_common.hpp"
 
+// Bishop test case
+// the bishop moves diagonally, as far as it can
+//
+// the moves are ordered starting with the northeast direction, going clockwise
+//
+//  \       /
+//   \     /
+//    4   1
+//     \ /
+//      B
+//     / \
+//    3   2
+//   /     \
+//  /       \
+//
+
 TEST_GROUP(TestBishop)
 {
 	PieceColor occupied_positions[8][8] {

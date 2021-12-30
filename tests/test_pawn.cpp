@@ -2,6 +2,22 @@
 #include "core/pawn.hpp"
 #include "test_common.hpp"
 
+// Pawn test case
+// The pawn only moves one cell "forwards". "forwards" is determined by
+// the color of the pawn. The pawn can move 2 cells forward at the first
+// move only. There are aother special move the pawn can do (en passent).
+// but it will be implemented in the Grid class.
+//
+//
+//    (|)
+//     |
+//     WP
+//
+//
+//     BP
+//     |
+//    (|)
+
 class DummyPawn : public Pawn
 {
 	public: 

@@ -2,6 +2,25 @@
 #include "core/knight.hpp"
 #include "test_common.hpp"
 
+// Knight test case
+// the knight moves in all possible rotations and flips of a L-shaped path
+//
+// The moves are ordered as follows, we start with position towards the northeast
+// then the position towards the northwest. We label the northeast position 1, and 
+// the northwest 2. We then rotate a 90 degrees clockwise. Position 1 would be the 
+// one pointing downwards and Position 2 would be upwards. We add those in that order
+//
+//    2_ _1
+//      |
+// 7    |   4
+// |	|   |
+//  ----K---
+// |    |   |
+// 8    |   3
+//    5_|_6
+//
+
+
 TEST_GROUP(TestKnight)
 {
 	PieceColor occupied_positions[8][8] {
