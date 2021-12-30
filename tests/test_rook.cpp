@@ -20,29 +20,42 @@
 
 TEST_GROUP(TestRook)
 {
-	PieceColor occupied_positions[8][8] = {
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-	};
+	FakeGrid occupied_positions;
+
+
+	void setup()
+	{
+		occupied_positions = (FakeGrid) new PieceColor [8][8] {
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+		};
+	}
+
+	void teardown()
+	{
+		for(int i = 0; i < 8; i ++)
+			delete[] occupied_positions[i];
+		delete[] occupied_positions;
+	}
 };
 
 TEST(TestRook, test_at_initial_position)
 {
 	// testing white rook
 	Rook white_rook(7, 0, WHITE);
-	std::vector<Position> possible_moves(white_rook.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_rook.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 0);	
 
 	// testing black rook
 	Rook black_rook(0, 0, BLACK);
 	possible_moves.clear();
-	possible_moves = black_rook.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_rook.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 0);
 }
 
@@ -51,7 +64,7 @@ TEST(TestRook, test_case_1)
 	// testing white rook
 	Rook white_rook(7, 0, WHITE);
 	occupied_positions[6][0] = EMPTY;
-	std::vector<Position> possible_moves(white_rook.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_rook.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 5);
 
 	CHECK_EQUAL(possible_moves[0], Position(6, 0));
@@ -64,7 +77,7 @@ TEST(TestRook, test_case_1)
 	Rook black_rook(0, 0, BLACK);
 	occupied_positions[0][0] = EMPTY;
 	possible_moves.clear();
-	possible_moves = black_rook.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_rook.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 6);
 
 	CHECK_EQUAL(possible_moves[0], Position(1, 0));
@@ -82,7 +95,7 @@ TEST(TestRook, test_case_2)
 	occupied_positions[3][0] = WHITE;
 	occupied_positions[7][0] = EMPTY;
 
-	std::vector<Position> possible_moves(white_rook.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_rook.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 11);
 	
 	CHECK_EQUAL(possible_moves[0],  Position(2, 0));
@@ -103,7 +116,7 @@ TEST(TestRook, test_case_2)
 	occupied_positions[0][7] = EMPTY;
 
 	possible_moves.clear();
-	possible_moves = black_rook.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_rook.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 11);
 
 	CHECK_EQUAL(possible_moves[0],  Position(2, 7));
@@ -125,7 +138,7 @@ TEST(TestRook, test_case_3)
 	Rook white_rook(3, 3, WHITE);
 	occupied_positions[3][3] = WHITE;
 
-	std::vector<Position> possible_moves(white_rook.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_rook.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 11);
 
 	CHECK_EQUAL(possible_moves[0],  Position(2, 3));
@@ -145,7 +158,7 @@ TEST(TestRook, test_case_3)
 	occupied_positions[4][4] = BLACK;
 
 	possible_moves.clear();
-	possible_moves = black_rook.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_rook.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 11);
 
 	CHECK_EQUAL(possible_moves[0],  Position(3, 4));

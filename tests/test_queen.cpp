@@ -41,16 +41,29 @@
 
 TEST_GROUP(TestQueen)
 {
-	PieceColor occupied_positions[8][8] = {
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-	};
+	FakeGrid occupied_positions;
+
+
+	void setup()
+	{
+		occupied_positions = (FakeGrid) new PieceColor [8][8] {
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+		};
+	}
+
+	void teardown()
+	{
+		for(int i = 0; i < 8; i ++)
+			delete[] occupied_positions[i];
+		delete[] occupied_positions;
+	}
 
 };
 
@@ -74,13 +87,13 @@ TEST(TestQueen, test_at_inital_position)
 	// testing white queen
 	Queen white_queen(7, 3, WHITE);
 	
-	std::vector<Position> possible_moves(white_queen.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_queen.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 0);
 
 	// testing black queen
 	Queen black_queen(0, 3, BLACK);
 
-	possible_moves = black_queen.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_queen.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 0);
 }
 
@@ -90,7 +103,7 @@ TEST(TestQueen, test_case_1_normal_implementation)
 	Queen white_queen(5, 5, WHITE);
 	occupied_positions[5][5] = WHITE;
 
-	std::vector<Position> possible_moves(white_queen.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_queen.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 17);
 
 	CHECK_EQUAL(possible_moves[0],  Position(4, 5));
@@ -116,7 +129,7 @@ TEST(TestQueen, test_case_1_normal_implementation)
 	Queen black_queen(2, 5, BLACK);
 	occupied_positions[2][5] = BLACK;
 
-	possible_moves = black_queen.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_queen.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 16);
 
 	CHECK_EQUAL(possible_moves[0],  Position(2, 6));
@@ -143,7 +156,7 @@ TEST(TestQueen, test_case_2_normal_implementation)
 	Queen white_queen(3, 3, WHITE);
 	occupied_positions[3][3] = WHITE;
 
-	std::vector<Position> possible_moves(white_queen.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_queen.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 19);
 
 	CHECK_EQUAL(possible_moves[0],  Position(2, 3));
@@ -171,7 +184,7 @@ TEST(TestQueen, test_case_2_normal_implementation)
 	Queen black_queen(4, 3, BLACK);
 	occupied_positions[4][3] = BLACK;
 	
-	possible_moves = black_queen.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_queen.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 18);	
 	
 	CHECK_EQUAL(possible_moves[0],  Position(3, 3));
@@ -200,7 +213,7 @@ TEST(TestQueen, test_case_1_easy_implementation)
 	Queen white_queen(5, 5, WHITE);
 	occupied_positions[5][5] = WHITE;
 
-	std::vector<Position> possible_moves(white_queen.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_queen.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 17);
 
 	CHECK_EQUAL(possible_moves[0],  Position(4, 5));
@@ -226,7 +239,7 @@ TEST(TestQueen, test_case_1_easy_implementation)
 	Queen black_queen(2, 5, BLACK);
 	occupied_positions[2][5] = BLACK;
 
-	possible_moves = black_queen.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_queen.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 16);
 
 	CHECK_EQUAL(possible_moves[0],  Position(2, 6));
@@ -253,7 +266,7 @@ TEST(TestQueen, test_case_2_eazy_implementation)
 	Queen white_queen(3, 3, WHITE);
 	occupied_positions[3][3] = WHITE;
 
-	std::vector<Position> possible_moves(white_queen.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_queen.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 19);
 
 	CHECK_EQUAL(possible_moves[0],  Position(2, 3));
@@ -281,7 +294,7 @@ TEST(TestQueen, test_case_2_eazy_implementation)
 	Queen black_queen(4, 3, BLACK);
 	occupied_positions[4][3] = BLACK;
 
-	possible_moves = black_queen.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_queen.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 18);
 
 	CHECK_EQUAL(possible_moves[0],  Position(3, 3));

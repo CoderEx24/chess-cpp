@@ -20,16 +20,29 @@
 
 TEST_GROUP(TestBishop)
 {
-	PieceColor occupied_positions[8][8] {
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-	};
+	FakeGrid occupied_positions;
+
+
+	void setup()
+	{
+		occupied_positions = (FakeGrid) new PieceColor [8][8] {
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+		};
+	}
+
+	void teardown()
+	{
+		for(int i = 0; i < 8; i ++)
+			delete[] occupied_positions[i];
+		delete[] occupied_positions;
+	}
 
 };
 
@@ -38,13 +51,13 @@ TEST(TestBishop, test_at_inital_position)
 	// testing white bishop
 	Bishop white_bishop(7, 2, WHITE);
 	
-	std::vector<Position> possible_moves(white_bishop.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_bishop.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 0);
 	
 	// testing black bishop	
 	Bishop black_bishop(0, 2, BLACK);
 	
-	possible_moves = black_bishop.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_bishop.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 0);
 
 }
@@ -55,7 +68,7 @@ TEST(TestBishop, test_case_1)
 	Bishop white_bishop(5, 4, WHITE);
 	occupied_positions[5][4] = WHITE;
 
-	std::vector<Position> possible_moves(white_bishop.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_bishop.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 7);
 
 	CHECK_EQUAL(possible_moves[0], Position(4, 5));
@@ -70,7 +83,7 @@ TEST(TestBishop, test_case_1)
 	Bishop black_bishop(2, 4, BLACK);
 	occupied_positions[2][4] = BLACK;
 
-	possible_moves = black_bishop.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_bishop.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 7);
 
 	CHECK_EQUAL(possible_moves[0], Position(3, 5));
@@ -88,7 +101,7 @@ TEST(TestBishop, test_case_2)
 	Bishop white_bishop(4, 3, WHITE);
 	occupied_positions[4][3] = WHITE;
 
-	std::vector<Position> possible_moves(white_bishop.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_bishop.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 8);
 
 	CHECK_EQUAL(possible_moves[0], Position(3, 4));
@@ -104,7 +117,7 @@ TEST(TestBishop, test_case_2)
 	Bishop black_bishop(3, 3, BLACK);
 	occupied_positions[3][3] = BLACK;
 
-	possible_moves = black_bishop.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_bishop.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 8);
 
 	CHECK_EQUAL(possible_moves[9], Position(2, 4));

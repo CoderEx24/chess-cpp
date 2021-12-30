@@ -23,23 +23,37 @@
 
 TEST_GROUP(TestKnight)
 {
-	PieceColor occupied_positions[8][8] {
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-		{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-	};
+	
+	FakeGrid occupied_positions;
+
+
+	void setup()
+	{
+		occupied_positions = (FakeGrid) new PieceColor [8][8] {
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
+		};
+	}
+
+	void teardown()
+	{
+		for(int i = 0; i < 8; i ++)
+			delete[] occupied_positions[i];
+		delete[] occupied_positions;
+	}
 };
 
 TEST(TestKnight, test_at_inital_position)
 {
 	// testing white knight
 	Knight white_knight(7, 1, WHITE);
-	std::vector<Position> possible_moves(white_knight.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_knight.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 2);
 
 	CHECK_EQUAL(possible_moves[0], Position(5, 2));
@@ -47,7 +61,7 @@ TEST(TestKnight, test_at_inital_position)
 
 	// testing black knight
 	Knight black_knight(0, 1, BLACK);
-	possible_moves = black_knight.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_knight.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 2);
 	
 	CHECK_EQUAL(possible_moves[0], Position(2, 2));
@@ -61,7 +75,7 @@ TEST(TestKnight, test_case_1)
 	occupied_positions[5][2] = WHITE;
 	occupied_positions[7][1] = EMPTY;
 
-	std::vector<Position> possible_moves(white_knight.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_knight.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 5);
 
 	CHECK_EQUAL(possible_moves[0], Position(3, 3));
@@ -75,7 +89,7 @@ TEST(TestKnight, test_case_1)
 	occupied_positions[2][2] = BLACK;
 	occupied_positions[0][1] = EMPTY;
 	
-	possible_moves = black_knight.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_knight.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 5);
 
 	CHECK_EQUAL(possible_moves[0], Position(0, 1));
@@ -92,7 +106,7 @@ TEST(TestKnight, test_case_2)
 	occupied_positions[3][3] = WHITE;
 	occupied_positions[7][1] = EMPTY;
 
-	std::vector<Position> possible_moves(white_knight.get_valid_positions((FakeGrid) occupied_positions));
+	std::vector<Position> possible_moves(white_knight.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(possible_moves.size(), 8);
 
 	CHECK_EQUAL(possible_moves[0], Position(1, 4));
@@ -109,7 +123,7 @@ TEST(TestKnight, test_case_2)
 	occupied_positions[4][3] = BLACK;
 	occupied_positions[0][1] = EMPTY;
 
-	possible_moves = black_knight.get_valid_positions((FakeGrid) occupied_positions);
+	possible_moves = black_knight.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 8);
 
 	CHECK_EQUAL(possible_moves[0], Position(2, 4));
