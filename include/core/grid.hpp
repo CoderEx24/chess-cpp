@@ -12,8 +12,8 @@
 class Grid
 {
 	AbstractChessPiece *grid[8][8];
-	std::vector<FakeChessPiece*> fake_pieces_list;
-	bool occupied_positions[8][8], game_over;
+	FakeGrid fake_grid;
+	bool game_over;
 	PieceColor current_turn, winner;
 	King *threatened_king, *white_king, *black_king;
 	std::vector<Position> current_possible_moves;
@@ -27,7 +27,7 @@ class Grid
 
 		bool is_game_over() const { return game_over; }
 		PieceColor get_winner() const { return winner; }
-		const std::vector<FakeChessPiece*> get_fake_piece_list() const { return fake_pieces_list; }
+		FakeGrid get_fake_grid() const { return const_cast<const FakeGrid>(fake_grid); }
 
 		void move(const Position& piece, const Position& dest);
 		const std::vector<Position>& get_possible_moves(const Position& piece);
