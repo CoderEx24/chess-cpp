@@ -27,7 +27,7 @@ class Grid
 
 		bool is_game_over() const { return game_over; }
 		PieceColor get_winner() const { return winner; }
-		FakeGrid get_fake_grid() const { return const_cast<const FakeGrid>(fake_grid); }
+		FakeGrid get_fake_grid() const { return fake_grid; }
 
 		void move(const Position& piece, const Position& dest);
 		const std::vector<Position>& get_possible_moves(const Position& piece);
