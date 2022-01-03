@@ -27,6 +27,7 @@ struct Position
 
 	bool operator==(const Position& rhs) { return x == rhs.x && y == rhs.y; }
 	bool operator!=(const Position& rhs) { return x != rhs.x || y != rhs.y; }
+	Position operator+(const Position& rhs) { return Position(this->x + rhs.x, this->y + rhs.y); }
 };
 
 class AbstractChessPiece
