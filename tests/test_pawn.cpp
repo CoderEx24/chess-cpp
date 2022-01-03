@@ -5,17 +5,20 @@
 // Pawn test case
 // The pawn only moves one cell "forwards". "forwards" is determined by
 // the color of the pawn. The pawn can move 2 cells forward at the first
-// move only. There are aother special move the pawn can do (en passent).
+// move only. The pawn attack diagnoally. It can attack any piece to the
+// northeast or northwest of the pawn (where north refers to the forward direction).
+// There are aother special move the pawn can do (en passent).
 // but it will be implemented in the Grid class.
 //
 //
 //    (|)
+//    _ _
 //     |
 //     WP
 //
 //
 //     BP
-//     |
+//    _|_
 //    (|)
 
 class DummyPawn : public Pawn
@@ -101,5 +104,33 @@ TEST(TestPawn, test_pawn_movement_after_first_move)
 	possible_moves = black_pawn.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(possible_moves.size(), 1);
 	CHECK_EQUAL(possible_moves[0], Position(2, 2));
+}
+
+TEST(TestPawn, test_case_enemy)
+{
+	// Testing white pawn
+	DummyPawn white_pawn(3, 2);
+	white_pawn.set_position(2, 2);
+	occupied_positions[2][2] = WHITE;
+	CHECK(!white_pawn.get_is_first_move());
+
+	std::vector<Position> possible_moves(white_pawn.get_valid_positions(occupied_positions));
+	CHECK_EQUAL(possible_moves.size(), 2);
+
+	CHECK_EQUAL(possible_moves[0], Position(1, 3));
+	CHECK_EQUAL(possible_moves[1], Position(1, 1));
+
+	// Testing black pawn
+	DummyPawn black_pawn(4, 2);
+	black_pawn.set_position(5, 2);
+	occupied_positions[5][2] = BLACK;
+	CHECK(!black_pawn.get_is_first_move());
+
+	possible_moves = black_pawn.get_valid_positions(occupied_positions);
+	CHECK_EQUAL(possible_moves.size(), 2);
+
+	CHECK_EQUAL(possible_moves[0], Position(6, 3));
+	CHECK_EQUAL(possible_moves[1], Position(6, 1));
+
 }
 
