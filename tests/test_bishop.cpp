@@ -1,6 +1,7 @@
 #include <CppUTest/TestHarness.h>
 #include "core/bishop.hpp"
 #include "test_common.hpp"
+#include <iostream>
 
 // Bishop test case
 // the bishop moves diagonally, as far as it can
@@ -25,22 +26,13 @@ TEST_GROUP(TestBishop)
 
 	void setup()
 	{
-		occupied_positions = (FakeGrid) new PieceColor [8][8] {
-			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-		};
+		occupied_positions = init_grid();
 	}
 
 	void teardown()
 	{
 		for(int i = 0; i < 8; i ++)
-			delete[] occupied_positions[i];
+			delete occupied_positions[i];
 		delete[] occupied_positions;
 	}
 

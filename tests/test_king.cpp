@@ -1,6 +1,7 @@
 #include <CppUTest/TestHarness.h>
 #include "core/king.hpp"
 #include "test_common.hpp"
+#include <iostream>
 
 // The King test case
 // the king is like the queen, it can move in any direction.
@@ -19,16 +20,7 @@ TEST_GROUP(TestKing)
 
 	void setup()
 	{
-		occupied_positions = (FakeGrid) new PieceColor [8][8] {
-			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-			{BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
-			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-			{WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE},
-		};
+		occupied_positions = init_grid();
 	}
 
 	void teardown()
