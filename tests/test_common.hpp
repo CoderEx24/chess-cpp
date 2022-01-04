@@ -17,9 +17,9 @@ inline FakeGrid init_grid()
 
 	for (int i = 0; i < 8; i ++) 
 	{
-		if (i == 0 || i == 1)
+		if (i == 6 || i == 7)
 			grid[i] = new PieceColor[8] {WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE};
-		else if (i == 6 || i == 7)
+		else if (i == 0 || i == 1)
 			grid[i] = new PieceColor[8] {BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK};
 		else
 			grid[i] = new PieceColor[8] {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
