@@ -15,6 +15,8 @@
 #define QUEEN 	0x4
 #define KING 	0x5
 
+#define OPPOSITE_COLOR(c) ((c == WHITE) ? BLACK : WHITE)
+
 using PieceColor = unsigned short;
 using PieceType  = unsigned short;
 using FakeGrid   = PieceColor**;
@@ -28,6 +30,7 @@ struct Position
 	bool operator==(const Position& rhs) { return x == rhs.x && y == rhs.y; }
 	bool operator!=(const Position& rhs) { return x != rhs.x || y != rhs.y; }
 	Position operator+(const Position& rhs) { return Position(this->x + rhs.x, this->y + rhs.y); }
+	Position operator*(float a) { return Position(a * this->x, a * this->y); }
 };
 
 inline bool in_bounds(const Position& point)
