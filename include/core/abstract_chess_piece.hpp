@@ -40,6 +40,7 @@ class AbstractChessPiece
 	protected:
 		PieceColor color;
 		Position pos;
+		std::vector<Position> possible_moves;
 
 	public:
 		AbstractChessPiece() {}
