@@ -104,7 +104,7 @@ TEST(TestPawn, test_case_enemy)
 	white_pawn.set_position(2, 2);
 	occupied_positions[2][2] = WHITE;
 	CHECK_FALSE(white_pawn.get_is_first_move());
-
+	
 	std::vector<Position> possible_moves(white_pawn.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(2, possible_moves.size());
 
@@ -122,6 +122,5 @@ TEST(TestPawn, test_case_enemy)
 
 	CHECK_EQUAL(Position(6, 3), possible_moves[0]);
 	CHECK_EQUAL(Position(6, 1), possible_moves[1]);
-
 }
 
