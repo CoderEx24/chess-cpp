@@ -30,6 +30,11 @@ struct Position
 	Position operator+(const Position& rhs) { return Position(this->x + rhs.x, this->y + rhs.y); }
 };
 
+bool in_bounds(const Position& point)
+{
+	return point.x >= 0 && point.x < 8 && point.y >= 0 && point.y < 8;
+}
+
 class AbstractChessPiece
 {
 	protected:
