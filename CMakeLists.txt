@@ -63,6 +63,11 @@ target_include_directories(tests PUBLIC
 	${PROJECT_INCLUDE_DIR}
 )
 
+target_include_directories(tests PUBLIC
+	-g
+	-include /usr/local/include/CppUTest/MemoryLeakDetectorNewMacros.h
+	)
+
 target_include_directories(chess PUBLIC
 	/usr/include
 	/usr/local/include
