@@ -111,7 +111,7 @@ TEST(TestBishop, test_case_2)
 	possible_moves = black_bishop.get_valid_positions(occupied_positions); 
 	CHECK_EQUAL(8, possible_moves.size());
 
-	CHECK_EQUAL(Position(2, 4), possible_moves[9]);
+	CHECK_EQUAL(Position(2, 4), possible_moves[0]);
 	CHECK_EQUAL(Position(4, 4), possible_moves[1]);
 	CHECK_EQUAL(Position(4, 2), possible_moves[2]);
 	CHECK_EQUAL(Position(2, 2), possible_moves[3]);
