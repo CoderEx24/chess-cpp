@@ -94,7 +94,7 @@ TEST(TestPawn, test_pawn_movement_after_first_move)
 
 	possible_moves = black_pawn.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(1, possible_moves.size());
-	CHECK_EQUAL(Position(2, 2), possible_moves[0]);
+	CHECK_EQUAL(Position(3, 2), possible_moves[0]);
 }
 
 TEST(TestPawn, test_case_enemy)
