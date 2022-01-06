@@ -56,20 +56,21 @@ TEST(TestRook, test_case_1)
 	Rook white_rook(7, 0, WHITE);
 	occupied_positions[6][0] = EMPTY;
 	std::vector<Position> possible_moves(white_rook.get_valid_positions(occupied_positions));
-	CHECK_EQUAL(5, possible_moves.size());
+	CHECK_EQUAL(6, possible_moves.size());
 
 	CHECK_EQUAL(Position(6, 0), possible_moves[0]);
 	CHECK_EQUAL(Position(5, 0), possible_moves[1]);
 	CHECK_EQUAL(Position(4, 0), possible_moves[2]);
 	CHECK_EQUAL(Position(3, 0), possible_moves[3]);
 	CHECK_EQUAL(Position(2, 0), possible_moves[4]);
+	CHECK_EQUAL(Position(1, 0), possible_moves[5]);
 	
 	// testing black rook
 	Rook black_rook(0, 0, BLACK);
-	occupied_positions[0][0] = EMPTY;
+	occupied_positions[1][0] = EMPTY;
 	possible_moves.clear();
 	possible_moves = black_rook.get_valid_positions(occupied_positions);
-	CHECK_EQUAL(6, possible_moves.size());
+	CHECK_EQUAL(7, possible_moves.size());
 
 	CHECK_EQUAL(Position(1, 0), possible_moves[0]);
 	CHECK_EQUAL(Position(2, 0), possible_moves[1]);
@@ -77,6 +78,7 @@ TEST(TestRook, test_case_1)
 	CHECK_EQUAL(Position(4, 0), possible_moves[3]);
 	CHECK_EQUAL(Position(5, 0), possible_moves[4]);
 	CHECK_EQUAL(Position(6, 0), possible_moves[5]);
+	CHECK_EQUAL(Position(7, 0), possible_moves[6]);
 }
 
 TEST(TestRook, test_case_2)
@@ -113,9 +115,9 @@ TEST(TestRook, test_case_2)
 	CHECK_EQUAL(Position(2, 7), possible_moves[ 0]);
 	CHECK_EQUAL(Position(4, 7), possible_moves[ 1]);
 	CHECK_EQUAL(Position(3, 6), possible_moves[ 2]);
-	CHECK_EQUAL(Position(1, 7), possible_moves[ 3]);
-	CHECK_EQUAL(Position(5, 7), possible_moves[ 4]);
-	CHECK_EQUAL(Position(3, 5), possible_moves[ 5]);
+	CHECK_EQUAL(Position(5, 7), possible_moves[ 3]);
+	CHECK_EQUAL(Position(3, 5), possible_moves[ 4]);
+	CHECK_EQUAL(Position(6, 7), possible_moves[ 5]);
 	CHECK_EQUAL(Position(3, 4), possible_moves[ 6]);
 	CHECK_EQUAL(Position(3, 3), possible_moves[ 7]);
 	CHECK_EQUAL(Position(3, 2), possible_moves[ 8]);
@@ -125,17 +127,14 @@ TEST(TestRook, test_case_2)
 
 TEST(TestRook, test_case_3)
 {
-	// testing white rook
 	Rook white_rook(3, 3, WHITE);
-	occupied_positions[3][3] = WHITE;
-
 	std::vector<Position> possible_moves(white_rook.get_valid_positions(occupied_positions));
 	CHECK_EQUAL(11, possible_moves.size());
 
 	CHECK_EQUAL(Position(2, 3), possible_moves[ 0]);
 	CHECK_EQUAL(Position(3, 4), possible_moves[ 1]);
 	CHECK_EQUAL(Position(4, 3), possible_moves[ 2]);
-	CHECK_EQUAL(Position(2, 3), possible_moves[ 3]);
+	CHECK_EQUAL(Position(3, 2), possible_moves[ 3]);
 	CHECK_EQUAL(Position(1, 3), possible_moves[ 4]);
 	CHECK_EQUAL(Position(3, 5), possible_moves[ 5]);
 	CHECK_EQUAL(Position(5, 3), possible_moves[ 6]);
@@ -158,8 +157,8 @@ TEST(TestRook, test_case_3)
 	CHECK_EQUAL(Position(4, 3), possible_moves[ 3]);
 	CHECK_EQUAL(Position(2, 4), possible_moves[ 4]);
 	CHECK_EQUAL(Position(4, 6), possible_moves[ 5]);
-	CHECK_EQUAL(Position(4, 2), possible_moves[ 6]);
-	CHECK_EQUAL(Position(1, 4), possible_moves[ 7]);
+	CHECK_EQUAL(Position(6, 4), possible_moves[ 6]);
+	CHECK_EQUAL(Position(4, 2), possible_moves[ 7]);
 	CHECK_EQUAL(Position(4, 7), possible_moves[ 8]);
 	CHECK_EQUAL(Position(4, 1), possible_moves[ 9]);
 	CHECK_EQUAL(Position(4, 0), possible_moves[10]);
