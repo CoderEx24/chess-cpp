@@ -4,6 +4,7 @@ project(chess-cpp VERSION 0.1)
 
 find_package(CppUTest REQUIRED)
 
+option(DEFINE_QUEEN_EZ_IMP "Enables the QUEEN_EZ_IMP macro to compile with the eazy implementation of the queen" OFF)
 set(CMAKE_CXX_COMPILER clang++)
 set(TEST_SOURCE_DIR "${PROJECT_SOURCE_DIR}/tests")
 set(PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
@@ -51,6 +52,10 @@ add_executable(tests
 	${TEST_SOURCE_DIR}/test_grid.cpp
 	${TEST_SOURCE_DIR}/test_main.cpp
 )
+
+if(DEFINE_QUEEN_EZ_IMP)
+	add_definitions(-DQUEEN_EZ_IMP)
+endif()
 
 target_link_libraries(tests PUBLIC
 	CppUTest
