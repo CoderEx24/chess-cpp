@@ -59,20 +59,6 @@ TEST_GROUP(TestQueen)
 };
 
 
-#ifdef QUEEN_EZ_IMP
-
-IGNORE_TEST(TestQueen, test_case_1_normal_implementation) {}
-IGNORE_TEST(TestQueen, test_case_2_normal_implementation) {}
-
-#else
-
-IGNORE_TEST(TestQueen, test_case_1_eazy_implementation) {}
-IGNORE_TEST(TestQueen, test_case_2_eazy_implementation) {}
-
-
-#endif
-
-
 TEST(TestQueen, test_at_inital_position)
 {
 	// testing white queen
@@ -87,6 +73,8 @@ TEST(TestQueen, test_at_inital_position)
 	possible_moves = black_queen.get_valid_positions(occupied_positions);
 	CHECK_EQUAL(0, possible_moves.size());
 }
+
+#ifndef QUEEN_EZ_IMP
 
 TEST(TestQueen, test_case_1_normal_implementation)
 {
@@ -198,6 +186,8 @@ TEST(TestQueen, test_case_2_normal_implementation)
 	CHECK_EQUAL(Position(4, 7), possible_moves[17]);
 }
 
+#else
+
 TEST(TestQueen, test_case_1_easy_implementation)
 {
 	// testing white queen
@@ -273,7 +263,7 @@ TEST(TestQueen, test_case_2_eazy_implementation)
 	CHECK_EQUAL(Position(3, 7), possible_moves[10]);
 	CHECK_EQUAL(Position(2, 4), possible_moves[11]);
 	CHECK_EQUAL(Position(4, 4), possible_moves[12]);
-	CHECK_EQUAL(Position(4, 3), possible_moves[13]);
+	CHECK_EQUAL(Position(4, 2), possible_moves[13]);
 	CHECK_EQUAL(Position(2, 2), possible_moves[14]);
 	CHECK_EQUAL(Position(1, 5), possible_moves[15]);
 	CHECK_EQUAL(Position(5, 5), possible_moves[16]);
@@ -308,3 +298,4 @@ TEST(TestQueen, test_case_2_eazy_implementation)
 	CHECK_EQUAL(Position(2, 1), possible_moves[17]);
 }
 
+#endif
