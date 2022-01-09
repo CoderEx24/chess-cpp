@@ -11,15 +11,15 @@
 
 class Grid
 {
-	AbstractChessPiece *grid[8][8];
-	FakeGrid fake_grid;
-	bool game_over;
-	PieceColor current_turn, winner;
-	King *threatened_king, *white_king, *black_king;
-	std::vector<Position> current_possible_moves;
+	protected:
+		AbstractChessPiece *grid[8][8];
+		FakeGrid fake_grid;
+		bool game_over;
+		PieceColor current_turn, winner;
+		King *threatened_king, *white_king, *black_king;
+		std::vector<Position> current_possible_moves;
 
-	void init_grid();
-	void check_king_for_threats();
+		void init_grid();
 
 	public:
 		Grid(): current_turn(WHITE), threatened_king(nullptr) { init_grid(); }
