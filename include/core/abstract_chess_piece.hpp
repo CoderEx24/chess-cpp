@@ -41,14 +41,15 @@ inline bool in_bounds(const Position& point)
 class AbstractChessPiece
 {
 	protected:
+		PieceType type;
 		PieceColor color;
 		Position pos;
 		std::vector<Position> possible_moves;
 
 	public:
-		AbstractChessPiece() {}
-		AbstractChessPiece(int x, int y, PieceColor c): color(c), pos(x, y) {}
-		AbstractChessPiece(const AbstractChessPiece& obj): color(obj.color), pos(obj.pos) {}
+		AbstractChessPiece(PieceType t): type(t) {}
+		AbstractChessPiece(PieceType t, int x, int y, PieceColor c): type(t), color(c), pos(x, y) {}
+		AbstractChessPiece(PieceType t, const AbstractChessPiece& obj): type(t), color(obj.color), pos(obj.pos) {}
 
   	 	void set_position(const Position& pos) { this->pos = pos; }
 		void set_position(int x, int y) { this->pos = Position(x, y); }

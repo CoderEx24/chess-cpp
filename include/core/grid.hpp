@@ -12,7 +12,7 @@
 class Grid
 {
 	protected:
-		AbstractChessPiece *grid[8][8];
+		AbstractChessPiece ***grid;
 		FakeGrid fake_grid;
 		bool game_over;
 		PieceColor current_turn, winner;

@@ -6,8 +6,8 @@
 class Rook : public AbstractChessPiece
 {
 	public:
-		Rook(): AbstractChessPiece() {}
-		Rook(int x, int y, PieceColor c): AbstractChessPiece(x, y, c) {}
+		Rook(): AbstractChessPiece(ROOK) {}
+		Rook(int x, int y, PieceColor c): AbstractChessPiece(ROOK, x, y, c) {}
 
 		const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) override;
 };

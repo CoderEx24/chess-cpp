@@ -6,8 +6,8 @@
 class Queen : public AbstractChessPiece
 {
 	public:
-		Queen(): AbstractChessPiece() {}
-		Queen(int x, int y, PieceColor c): AbstractChessPiece(x, y, c) {}
+		Queen(): AbstractChessPiece(QUEEN) {}
+		Queen(int x, int y, PieceColor c): AbstractChessPiece(QUEEN, x, y, c) {}
 
 		const std::vector<Position>& get_valid_positions(PieceColor **occupied_positions) override;
 };
