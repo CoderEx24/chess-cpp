@@ -56,7 +56,8 @@ class AbstractChessPiece
 
 		const Position& get_position() const { return this->pos; }
 		PieceColor get_color() const { return this->color; }
-		
+		PieceType  get_type() const { return this->type; }		
+
 		// this function should return a list of absolute positions that the chess piece can occupy
 		virtual const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) = 0;
 
