@@ -3,7 +3,10 @@
 
 class DummyGrid : public Grid
 {
-	friend const AbstractChessPiece* get_piece_at(const DummyGrid&, const Position&);
+	public:
+		DummyGrid(): Grid() {};
+		DummyGrid(PlaceCommand *commands, int size): Grid(commands, size) {};
+		friend const AbstractChessPiece* get_piece_at(const DummyGrid&, const Position&);
 };
 
 const AbstractChessPiece* get_piece_at(const DummyGrid& grid, const Position& pos)
@@ -165,3 +168,169 @@ TEST(TestGrid, test_at_initial_state)
 
 }
 
+TEST(TestGrid, test_custom_grids)
+{
+	// test 1
+	// place 4 pawns the first row
+	PlaceCommand grid1_commands [] {
+		Grid::encode(Position(0, 0), PAWN, WHITE),
+		Grid::encode(Position(0, 1), PAWN, BLACK),
+		Grid::encode(Position(0, 2), PAWN, WHITE),
+		Grid::encode(Position(0, 3), PAWN, BLACK)
+	};
+
+	DummyGrid grid1(grid1_commands, 4);
+	
+	CHECK_EQUAL(PAWN,  get_piece_at(grid1, Position(0, 0))->get_type());
+	CHECK_EQUAL(WHITE, get_piece_at(grid1, Position(0, 0))->get_color());
+
+	CHECK_EQUAL(PAWN,  get_piece_at(grid1, Position(0, 1))->get_type());
+	CHECK_EQUAL(BLACK, get_piece_at(grid1, Position(0, 1))->get_color());
+
+	CHECK_EQUAL(PAWN,  get_piece_at(grid1, Position(0, 2))->get_type());
+	CHECK_EQUAL(WHITE, get_piece_at(grid1, Position(0, 2))->get_color());
+
+	CHECK_EQUAL(PAWN,  get_piece_at(grid1, Position(0, 3))->get_type());
+	CHECK_EQUAL(BLACK, get_piece_at(grid1, Position(0, 3))->get_color());
+
+
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(0, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(0, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(0, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(0, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(1, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(2, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(3, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(4, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(5, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(6, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid1, Position(7, 7)));
+
+	// test 2
+	// place a king in the middle of the board
+	PlaceCommand grid2_commands[] { Grid::encode(Position(3, 3), KING, WHITE) };
+
+	DummyGrid grid2(grid2_commands, 1);
+
+	CHECK_EQUAL(KING,  get_piece_at(grid2, Position(3, 3))->get_type());
+	CHECK_EQUAL(WHITE, get_piece_at(grid2, Position(3, 3))->get_color());
+	
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(1, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(2, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(3, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(4, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(5, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 7)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(6, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 0)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 1)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 2)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 3)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 4)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 5)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 6)));
+	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 7)));
+
+}
+
+TEST(TestGrid, test_move)
+{
+	
+}
