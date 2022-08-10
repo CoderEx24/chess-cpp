@@ -24,14 +24,14 @@ TEST(TestGrid, test_at_initial_state)
 {
 	// testing initial grid state
 	DummyGrid grid;
-	
+
 	// testing the first row
 	CHECK_EQUAL(ROOK  , get_piece_at(grid, Position(0, 0))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(0, 0))->get_color());
-                            
+
 	CHECK_EQUAL(KNIGHT, get_piece_at(grid, Position(0, 1))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(0, 1))->get_color());
-	                    
+
 	CHECK_EQUAL(BISHOP, get_piece_at(grid, Position(0, 2))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(0, 2))->get_color());
 
@@ -51,54 +51,54 @@ TEST(TestGrid, test_at_initial_state)
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(0, 7))->get_color());
 
 	// testing the second row
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 0))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 0))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 1))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 1))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 2))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 2))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 3))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 3))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 4))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 4))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 5))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 5))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 6))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 6))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(1, 7))->get_type() );
 	CHECK_EQUAL(BLACK , get_piece_at(grid, Position(1, 7))->get_color());
-	
+
 	// tesing second to last row
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 0))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 0))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 1))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 1))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 2))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 2))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 3))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 3))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 4))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 4))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 5))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 5))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 6))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 6))->get_color());
-	
+
 	CHECK_EQUAL(PAWN  , get_piece_at(grid, Position(6, 7))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(6, 7))->get_color());
 
@@ -106,10 +106,10 @@ TEST(TestGrid, test_at_initial_state)
 	// testing the last row
 	CHECK_EQUAL(ROOK  , get_piece_at(grid, Position(7, 0))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(7, 0))->get_color());
-                            
+
 	CHECK_EQUAL(KNIGHT, get_piece_at(grid, Position(7, 1))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(7, 1))->get_color());
-	                    
+
 	CHECK_EQUAL(BISHOP, get_piece_at(grid, Position(7, 2))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(7, 2))->get_color());
 
@@ -127,9 +127,9 @@ TEST(TestGrid, test_at_initial_state)
 
 	CHECK_EQUAL(ROOK  , get_piece_at(grid, Position(7, 7))->get_type() );
 	CHECK_EQUAL(WHITE , get_piece_at(grid, Position(7, 7))->get_color());
-	
+
 	// testing the middle 4 rows
-	
+
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 1)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 2)));
@@ -138,7 +138,7 @@ TEST(TestGrid, test_at_initial_state)
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 5)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 6)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 7)));
-	
+
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 0)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 1)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 2)));
@@ -147,7 +147,7 @@ TEST(TestGrid, test_at_initial_state)
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 5)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 6)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 7)));
-	
+
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 0)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 1)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 2)));
@@ -156,7 +156,7 @@ TEST(TestGrid, test_at_initial_state)
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 5)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 6)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 7)));
-	
+
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 0)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 1)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 2)));
@@ -180,7 +180,7 @@ TEST(TestGrid, test_custom_grids)
 	};
 
 	DummyGrid grid1(grid1_commands, 4);
-	
+
 	CHECK_EQUAL(PAWN,  get_piece_at(grid1, Position(0, 0))->get_type());
 	CHECK_EQUAL(WHITE, get_piece_at(grid1, Position(0, 0))->get_color());
 
@@ -263,7 +263,7 @@ TEST(TestGrid, test_custom_grids)
 
 	CHECK_EQUAL(KING,  get_piece_at(grid2, Position(3, 3))->get_type());
 	CHECK_EQUAL(WHITE, get_piece_at(grid2, Position(3, 3))->get_color());
-	
+
 	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 0)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 1)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(0, 2)));
@@ -330,7 +330,20 @@ TEST(TestGrid, test_custom_grids)
 
 }
 
-TEST(TestGrid, test_move)
+TEST(TestGrid, test_move_pawn_one_step)
 {
-	
+    // checking white pawns
+    DummyGrid grid;
+    grid.move(Position(6, 0), Position(5, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 0)));
+    CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(5, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 0))->get_color());
+
+    // checking black pawns
+    grid.move(Position(1, 0), Position(2, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 0)));
+    CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(2, 0))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
 }
