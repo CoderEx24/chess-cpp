@@ -27,15 +27,18 @@ class Grid
 		Grid(): current_turn(WHITE), threatened_king(nullptr) { init_grid(); }
 		Grid(PieceColor turn): current_turn(turn), threatened_king(nullptr) { init_grid(); }
 		Grid(PlaceCommand *commands, int size);
-		
-		inline static PlaceCommand encode(Position pos, PieceType type, PieceColor color);
+
+		inline static PlaceCommand encode(Position pos, PieceType type, PieceColor color)
+        {
+            return 0;
+        }
 		bool is_game_over() const { return game_over; }
 		PieceColor get_winner() const { return winner; }
 		FakeGrid get_fake_grid() const { return fake_grid; }
 
 		void move(const Position& piece, const Position& dest);
 		const std::vector<Position>& get_possible_moves(const Position& piece);
-				
+
 };
 
 #endif
