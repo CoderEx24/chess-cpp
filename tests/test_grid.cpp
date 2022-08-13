@@ -332,8 +332,9 @@ TEST(TestGrid, test_custom_grids)
 
 TEST(TestGrid, test_move_pawn_one_step)
 {
-    // checking white pawns
     DummyGrid grid;
+
+    // checking white pawns
     grid.move(Position(6, 0), Position(5, 0));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 0)));
@@ -346,4 +347,23 @@ TEST(TestGrid, test_move_pawn_one_step)
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 0)));
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(2, 0))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
+}
+
+TEST(TestGrid, test_move_pawn_two_steps)
+{
+    DummyGrid grid;
+
+    // checking white pawns
+    grid.move(Position(6, 0), Position(4, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 0)));
+    CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(4, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(4, 0))->get_color());
+
+    // checking black pawns
+    grid.move(Position(1, 1), Position(3, 1));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 1)));
+    CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(3, 1))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(3, 1))->get_color());
 }
