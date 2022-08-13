@@ -10,7 +10,7 @@ set(TEST_SOURCE_DIR "${PROJECT_SOURCE_DIR}/tests")
 set(PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
 
-add_executable(chess 
+add_executable(chess
 	${PROJECT_SOURCE_DIR}/core/pawn.cpp
 	${PROJECT_SOURCE_DIR}/core/rook.cpp
 	${PROJECT_SOURCE_DIR}/core/knight.cpp
@@ -35,7 +35,7 @@ add_executable(debug
 
 )
 
-add_executable(tests 
+add_executable(tests
 	${PROJECT_SOURCE_DIR}/core/pawn.cpp
 	${PROJECT_SOURCE_DIR}/core/rook.cpp
 	${PROJECT_SOURCE_DIR}/core/knight.cpp
@@ -68,9 +68,10 @@ target_include_directories(tests PUBLIC
 	${PROJECT_INCLUDE_DIR}
 )
 
-target_include_directories(tests PUBLIC
+target_compile_options(tests PUBLIC
 	-g
 	-include /usr/local/include/CppUTest/MemoryLeakDetectorNewMacros.h
+    -o tests_exe
 	)
 
 target_include_directories(chess PUBLIC
