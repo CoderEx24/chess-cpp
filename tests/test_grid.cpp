@@ -6,6 +6,9 @@ class DummyGrid : public Grid
 	public:
 		DummyGrid(): Grid() {};
 		DummyGrid(PlaceCommand *commands, int size): Grid(commands, size) {};
+
+        PieceColor get_current_turn() { return this->current_turn; }
+
 		friend const AbstractChessPiece* get_piece_at(const DummyGrid&, const Position&);
 };
 
@@ -328,6 +331,23 @@ TEST(TestGrid, test_custom_grids)
 	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 6)));
 	CHECK_EQUAL(nullptr, get_piece_at(grid2, Position(7, 7)));
 
+}
+
+TEST(TestGrid, test_turn_switch)
+{
+    DummyGrid grid;
+
+    CHECK_EQUAL(WHITE, grid.get_current_turn());
+
+    // moving a white pawn
+    grid.move(Position(6, 0), Position(5, 0));
+
+    CHECK_EQUAL(BLACK, grid.get_current_turn());
+
+    // moving a black pawn
+    grid.move(Position(1, 0), Position(2, 0));
+
+    CHECK_EQUAL(WHITE, grid.get_current_turn());
 }
 
 TEST(TestGrid, test_move_pawn_one_step)
