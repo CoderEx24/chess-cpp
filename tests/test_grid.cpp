@@ -387,3 +387,47 @@ TEST(TestGrid, test_move_pawn_two_steps)
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(3, 1))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(3, 1))->get_color());
 }
+
+TEST(TestGrid, test_move_rook)
+{
+    DummyGrid grid;
+
+    // clear a path for the rooks
+    grid.move(Position(6, 0), Position(4, 0));
+    grid.move(Position(1, 0), Position(3, 0));
+
+    // move white rook
+    grid.move(Position(7, 0), Position(5, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 0)));
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(5, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 0))->get_color());
+
+    // move black rook
+    grid.move(Position(0, 0), Position(2, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 0)));
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 0))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
+
+    // moving the white rook to an open position
+    grid.move(Position(5, 0), Position(5, 4));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 0)));
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(5, 4))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 4))->get_color());
+
+    // moving the black rook to the same column
+    grid.move(Position(2, 0), Position(2, 4));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 4))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 4))->get_color());
+
+    // capturing the black rook
+    grid.move(Position(5, 4), Position(2, 4));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 4)));
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 4))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 4))->get_color());
+}
