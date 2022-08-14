@@ -431,3 +431,43 @@ TEST(TestGrid, test_move_rook)
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 4))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 4))->get_color());
 }
+
+TEST(TestGrid, test_move_knight)
+{
+    DummyGrid grid;
+
+    // moving white knight
+    grid.move(Position(7, 1), Position(5, 2));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 1)));
+    CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(5, 2))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 2))->get_color());
+
+    // moving black knight
+    grid.move(Position(0, 1), Position(2, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 1)));
+    CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(2, 0))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
+
+    // moving white knight
+    grid.move(Position(5, 2), Position(4, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 2)));
+    CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(4, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(4, 0))->get_color());
+
+    // moving black knight
+    grid.move(Position(2, 0), Position(3, 2));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
+    CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(3, 2))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(3, 2))->get_color());
+
+    // moving white knight
+    grid.move(Position(4, 0), Position(3, 2));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
+    CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(3, 2))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(3, 2))->get_color());
+}
