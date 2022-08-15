@@ -494,3 +494,40 @@ TEST(TestGrid, test_move_bishop)
     CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
 }
+
+TEST(TestGrid, test_move_queen)
+{
+    DummyGrid grid;
+
+    // clearing the path for the queens
+    grid.move(Position(6, 3), Position(4, 3));
+    grid.move(Position(1, 3), Position(3, 3));
+
+    // moving white queen
+    grid.move(Position(7, 3), Position(5, 3));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 3)));
+    CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 3))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 3))->get_color());
+
+    // moving black queen
+    grid.move(Position(0, 3), Position(2, 3));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 3)));
+    CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(2, 3))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 3))->get_color());
+
+    // moving white queen
+    grid.move(Position(5, 3), Position(5, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 3)));
+    CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 0))->get_color());
+
+    // capturing white queen
+    grid.move(Position(2, 3), Position(5, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 3)));
+    CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 0))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(5, 0))->get_color());
+}
