@@ -471,3 +471,26 @@ TEST(TestGrid, test_move_knight)
     CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(3, 2))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(3, 2))->get_color());
 }
+
+TEST(TestGrid, test_move_bishop)
+{
+    DummyGrid grid;
+
+    // clearing the path for the bishops
+    grid.move(Position(6, 4), Position(4, 4));
+    grid.move(Position(1, 1), Position(3, 1));
+
+    // moving white bishop
+    grid.move(Position(7, 5), Position(2, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 5)));
+    CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(2, 0))->get_color());
+
+    // capturing white bishop
+    grid.move(Position(0, 2), Position(2, 0));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
+    CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
+}
