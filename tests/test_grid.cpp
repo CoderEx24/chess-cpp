@@ -531,3 +531,40 @@ TEST(TestGrid, test_move_queen)
     CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 0))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(5, 0))->get_color());
 }
+
+TEST(TestGrid, test_move_king)
+{
+    DummyGrid grid;
+
+    // clearing the path for the kings
+    grid.move(Position(6, 4), Position(4, 4));
+    grid.move(Position(1, 4), Position(3, 4));
+
+    // moving white king
+    grid.move(Position(7, 4), Position(6, 4));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 4)));
+    CHECK_EQUAL(KING,    get_piece_at(grid, Position(6, 4))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(6, 4))->get_color());
+
+    // moving the black king
+    grid.move(Position(0, 4), Position(1, 4));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 4)));
+    CHECK_EQUAL(KING,    get_piece_at(grid, Position(1, 4))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(1, 4))->get_color());
+
+    // moving the white king
+    grid.move(Position(6, 4), Position(5, 5));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 4)));
+    CHECK_EQUAL(KING,    get_piece_at(grid, Position(5, 5))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 5))->get_color());
+
+    // moving the black king
+    grid.move(Position(1, 4), Position(2, 5));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 4)));
+    CHECK_EQUAL(KING,    get_piece_at(grid, Position(2, 5))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 5))->get_color());
+}
