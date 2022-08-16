@@ -568,3 +568,16 @@ TEST(TestGrid, test_move_king)
     CHECK_EQUAL(KING,    get_piece_at(grid, Position(2, 5))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 5))->get_color());
 }
+
+TEST(TestGrid, test_winning_condition)
+{
+    DummyGrid grid;
+
+    // making the 3 move checkmate
+    grid.move(Position(6, 4), Position(4, 4));
+    grid.move(Position(1, 2), Position(3, 2));
+    grid.move(Position(4, 4), Position(3, 2));
+    grid.move(Position(0, 3), Position(3, 0));
+
+    CHECK_EQUAL(BLACK, grid.get_winner());
+}
