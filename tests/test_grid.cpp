@@ -581,3 +581,19 @@ TEST(TestGrid, test_winning_condition)
 
     CHECK_EQUAL(BLACK, grid.get_winner());
 }
+
+TEST(TestGrid, test_en_passant)
+{
+    DummyGrid grid;
+
+    grid.move(Position(6, 0), Position(4, 0));
+    grid.move(Position(1, 1), Position(3, 1));
+    grid.move(Position(4, 0), Position(3, 0));
+    grid.move(Position(3, 1), Position(4, 1));
+    grid.move(Position(6, 2), Position(4, 2));
+    grid.move(Position(4, 1), Position(5, 2));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 2)));
+    CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(5, 2))->get_type());
+    CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(5, 2))->get_color());
+}
