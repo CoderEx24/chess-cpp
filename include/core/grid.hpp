@@ -21,7 +21,7 @@ class Grid
 		King *threatened_king, *white_king, *black_king;
 		std::vector<Position> current_possible_moves;
 
-		void init_grid() {};
+		void init_grid();
 
 	public:
 		Grid(): current_turn(WHITE), threatened_king(nullptr) { init_grid(); }
