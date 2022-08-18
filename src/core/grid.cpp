@@ -39,10 +39,43 @@ void Grid::init_grid()
 
 Grid::Grid(PlaceCommand *commands, int size)
 {
-}
+    for (int i = 0; i < size; i ++)
+    {
+        PlaceCommand command = commands[i];
+        PieceColor color = command & 0x200;
+        Position   pos   = Position(command & 0x7, command & 0x38);
 
-Grid::Grid(PlaceCommand *commands, int size)
-{
+        AbstractChessPiece *new_piece = nullptr;
+
+        switch (command & 0x070)
+        {
+            case PAWN:
+                new_piece = new Pawn(pos.x, pos.y, color);
+                break;
+
+            case ROOK:
+                new_piece = new Rook(pos.x, pos.y, color);
+                break;
+
+            case KNIGHT:
+                new_piece = new Knight(pos.x, pos.y, color);
+                break;
+
+            case BISHOP:
+                new_piece = new Bishop(pos.x, pos.y, color);
+                break;
+
+            case QUEEN:
+                new_piece = new Queen(pos.x, pos.y, color);
+                break;
+
+            case KING:
+                new_piece = new King(pos.x, pos.y, color);
+                break;
+        }
+
+        this->grid[pos.x][pos.y] = new_piece;
+    }
 }
 
 void Grid::move(const Position& piece, const Position& dest)
