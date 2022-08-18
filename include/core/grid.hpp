@@ -30,8 +30,12 @@ class Grid
 
 		inline static PlaceCommand encode(Position pos, PieceType type, PieceColor color)
         {
-            return 0;
+            return pos.x |
+                (pos.y << 4) |
+                (type << 7) |
+                (color << 8);
         }
+
 		bool is_game_over() const { return game_over; }
 		PieceColor get_winner() const { return winner; }
 		FakeGrid get_fake_grid() const { return fake_grid; }
