@@ -597,3 +597,48 @@ TEST(TestGrid, test_en_passant)
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(5, 2))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(5, 2))->get_color());
 }
+
+TEST(TestGrid, test_caslting)
+{
+    DummyGrid grid;
+
+    // castling kingside
+    grid.move(Position(7, 6), Position(5, 7));
+    grid.move(Position(1, 0), Position(2, 0));
+    grid.move(Position(6, 6), Position(4, 6));
+    grid.move(Position(2, 0), Position(3, 0));
+    grid.move(Position(7, 5), Position(6, 6));
+    grid.move(Position(3, 0), Position(4, 0));
+    grid.move(Position(7, 4), Position(7, 6));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 4)));
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 7)));
+
+    CHECK_EQUAL(KING,    get_piece_at(grid, Position(7, 6))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(7, 6))->get_color());
+
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(7, 5))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(7, 5))->get_color());
+
+    DummyGrid grid2;
+
+    // castling queenside
+    grid.move(Position(6, 3), Position(4, 3));
+    grid.move(Position(1, 1), Position(2, 1));
+    grid.move(Position(7, 3), Position(5, 3));
+    grid.move(Position(2, 1), Position(3, 1));
+    grid.move(Position(7, 2), Position(5, 4));
+    grid.move(Position(3, 1), Position(4, 1));
+    grid.move(Position(7, 1), Position(5, 0));
+    grid.move(Position(4, 1), Position(5, 1));
+    grid.move(Position(7, 4), Position(7, 2));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 4)));
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 0)));
+
+    CHECK_EQUAL(KING,    get_piece_at(grid, Position(7, 2))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(7, 2))->get_color());
+
+    CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(7, 3))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(7, 3))->get_color());
+}
