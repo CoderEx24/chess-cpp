@@ -3,13 +3,24 @@
 void Grid::init_grid()
 {
     this->grid = new AbstractChessPiece**[8];
+    this->fake_grid = new PieceColor*[8];
+
     for (int i = 0; i < 8; i ++)
+    {
         this->grid[i] = new AbstractChessPiece*[8];
+        this->fake_grid[i] = new PieceColor[8];
+    }
 
     for (int i = 0; i < 8; i ++)
     {
         this->grid[1][i] = new Pawn(1, i, BLACK);
         this->grid[6][i] = new Pawn(6, i, WHITE);
+
+        this->fake_grid[0][i] = BLACK;
+        this->fake_grid[1][i] = BLACK;
+        this->fake_grid[6][i] = WHITE;
+        this->fake_grid[7][i] = WHITE;
+
     }
 
     this->grid[0][0] = new Rook(0, 0, BLACK);
