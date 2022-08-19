@@ -1,6 +1,8 @@
 #include "core/grid.hpp"
 #include <vector>
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
 
 void Grid::init_grid()
 {
@@ -35,7 +37,7 @@ void Grid::init_grid()
     this->grid[0][5] = new Bishop(0, 5, BLACK);
 
     this->grid[0][3] = new Queen(0, 3, BLACK);
-    this->grid[0][4] = new King(0, 4, BLACK);
+    this->grid[0][4] = this->black_king = new King(0, 4, BLACK);
 
     this->grid[7][0] = new Rook(7, 0, WHITE);
     this->grid[7][7] = new Rook(7, 7, WHITE);
@@ -47,20 +49,35 @@ void Grid::init_grid()
     this->grid[7][5] = new Bishop(7, 5, WHITE);
 
     this->grid[7][3] = new Queen(7, 3, WHITE);
-    this->grid[7][4] = new King(7, 4, WHITE);
+    this->grid[7][4] = this->white_king = new King(7, 4, WHITE);
 }
 
 Grid::Grid(PlaceCommand *commands, int size)
 {
+    this->grid = new AbstractChessPiece**[8];
+    this->fake_grid = new PieceColor*[8];
+
+    for (int i = 0; i < 8; i ++)
+    {
+        this->grid[i] = new AbstractChessPiece*[8];
+        this->fake_grid[i] = new PieceColor[8];
+
+        for (int j = 0; j < 8; j ++)
+        {
+            this->grid[i][j] = nullptr;
+            this->fake_grid[i][j] = EMPTY;
+        }
+    }
+
     for (int i = 0; i < size; i ++)
     {
         PlaceCommand command = commands[i];
-        PieceColor color = command & 0x200;
-        Position   pos   = Position(command & 0x7, command & 0x38);
+        PieceColor color = 1 + ((command & 0b1000000000) >> 9);
+        Position   pos   = Position(command & 0b111, (command & 0b111000) >> 3);
 
         AbstractChessPiece *new_piece = nullptr;
 
-        switch (command & 0x070)
+        switch ((command & 0b111000000) >> 6)
         {
             case PAWN:
                 new_piece = new Pawn(pos.x, pos.y, color);
@@ -88,6 +105,7 @@ Grid::Grid(PlaceCommand *commands, int size)
         }
 
         this->grid[pos.x][pos.y] = new_piece;
+        this->fake_grid[pos.x][pos.y] = color;
     }
 }
 
@@ -96,14 +114,25 @@ Grid::~Grid()
     for (int i = 0; i < 8; i ++)
     {
         for (int j = 0; j < 8; j ++)
+        {
             if (this->grid[i][j]) delete this->grid[i][j];
+            this->grid[i][j] = nullptr;
+        }
 
         delete[] this->grid[i];
         delete[] this->fake_grid[i];
+
+        this->grid[i] = nullptr;
+        this->fake_grid[i] = nullptr;
     }
 
     delete[] this->grid;
     delete[] this->fake_grid;
+
+    this->grid       = nullptr;
+    this->fake_grid  = nullptr;
+    this->white_king = nullptr;
+    this->black_king = nullptr;
 }
 
 void Grid::move(const Position& piece, const Position& dest)

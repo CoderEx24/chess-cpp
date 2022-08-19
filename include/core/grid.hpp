@@ -32,9 +32,9 @@ class Grid
 		inline static PlaceCommand encode(Position pos, PieceType type, PieceColor color)
         {
             return pos.x |
-                (pos.y << 4) |
-                (type << 7) |
-                (color << 8);
+                (pos.y << 3) |
+                (type << 6) |
+                ((color - 1) << 9);
         }
 
 		bool is_game_over() const { return game_over; }
