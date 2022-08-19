@@ -1,4 +1,6 @@
 #include "core/grid.hpp"
+#include <vector>
+#include <algorithm>
 
 void Grid::init_grid()
 {
@@ -93,9 +95,18 @@ void Grid::move(const Position& piece, const Position& dest)
 {
 }
 
+// TODO: potential of memory leak, use smart pointers instead of raw ones
 const std::vector<Position>& Grid::get_possible_moves(const Position& piece)
 {
+    std::vector<Position> *pos_list = new std::vector<Position>(0);
 
+    if (this->grid[piece.x][piece.y])
+    {
+        delete pos_list;
+        pos_list = new std::vector<Position>(this->grid[piece.x][piece.y]->get_valid_positions(this->fake_grid));
+    }
+
+    return *pos_list;
 }
 
 /*PlaceCommand Grid::encode(Position, PieceType, PieceColor)
