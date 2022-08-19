@@ -27,6 +27,7 @@ class Grid
 		Grid(): current_turn(WHITE), threatened_king(nullptr) { init_grid(); }
 		Grid(PieceColor turn): current_turn(turn), threatened_king(nullptr) { init_grid(); }
 		Grid(PlaceCommand *commands, int size);
+        ~Grid();
 
 		inline static PlaceCommand encode(Position pos, PieceType type, PieceColor color)
         {

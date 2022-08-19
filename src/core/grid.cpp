@@ -91,6 +91,21 @@ Grid::Grid(PlaceCommand *commands, int size)
     }
 }
 
+Grid::~Grid()
+{
+    for (int i = 0; i < 8; i ++)
+    {
+        for (int j = 0; j < 8; j ++)
+            if (this->grid[i][j]) delete this->grid[i][j];
+
+        delete[] this->grid[i];
+        delete[] this->fake_grid[i];
+    }
+
+    delete[] this->grid;
+    delete[] this->fake_grid;
+}
+
 void Grid::move(const Position& piece, const Position& dest)
 {
     if (!in_bounds(piece) || !in_bounds(dest))
@@ -104,11 +119,12 @@ void Grid::move(const Position& piece, const Position& dest)
 
     selected_piece->set_position(dest);
 
-    if (!this->grid[dest.x][dest.y])
+    if (this->grid[dest.x][dest.y])
         delete this->grid[dest.x][dest.y];
 
     this->grid[dest.x][dest.y] = selected_piece;
 
+    this->current_turn = (this->current_turn == WHITE ? BLACK : WHITE);
 }
 
 // TODO: potential of memory leak, use smart pointers instead of raw ones
