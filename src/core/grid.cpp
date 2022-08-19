@@ -93,6 +93,22 @@ Grid::Grid(PlaceCommand *commands, int size)
 
 void Grid::move(const Position& piece, const Position& dest)
 {
+    if (!in_bounds(piece) || !in_bounds(dest))
+        return;
+
+    AbstractChessPiece *selected_piece = this->grid[piece.x][piece.y];
+    std::vector<Position> possible_moves(selected_piece->get_valid_positions(this->fake_grid));
+
+    if (std::find(possible_moves.begin(), possible_moves.end(), dest) == possible_moves.end())
+        return;
+
+    selected_piece->set_position(dest);
+
+    if (!this->grid[dest.x][dest.y])
+        delete this->grid[dest.x][dest.y];
+
+    this->grid[dest.x][dest.y] = selected_piece;
+
 }
 
 // TODO: potential of memory leak, use smart pointers instead of raw ones
