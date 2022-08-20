@@ -481,18 +481,26 @@ TEST(TestGrid, test_move_bishop)
     CHECK_TRUE(grid.move(Position(1, 1), Position(3, 1)));
 
     // moving white bishop
-    CHECK_TRUE(grid.move(Position(7, 5), Position(2, 0)));
+    CHECK_TRUE(grid.move(Position(7, 5), Position(3, 1)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 5)));
-    CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
-    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(2, 0))->get_color());
+    CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(3, 1))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(3, 1))->get_color());
 
-    // capturing white bishop
+    // moving black bishop
     CHECK_TRUE(grid.move(Position(0, 2), Position(2, 0)));
 
-    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 2)));
     CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
+
+    // capturing black bishop
+
+    CHECK_TRUE(grid.move(Position(3, 1), Position(2, 0)));
+
+    CHECK_EQUAL(nullptr, get_piece_at(grid, Position(3, 1)));
+    CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(2, 0))->get_color());
 }
 
 TEST(TestGrid, test_move_queen)
