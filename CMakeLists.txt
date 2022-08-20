@@ -70,6 +70,7 @@ target_include_directories(tests PUBLIC
 
 target_compile_options(tests PUBLIC
 	-g
+    -O0
 	-include /usr/local/include/CppUTest/MemoryLeakDetectorNewMacros.h
     -o tests_exe
 	)
@@ -81,7 +82,7 @@ target_include_directories(chess PUBLIC
 )
 
 target_compile_options(chess PUBLIC
-	-OO
+	-O2
 )
 
 target_include_directories(debug PRIVATE
@@ -92,4 +93,5 @@ target_include_directories(debug PRIVATE
 
 target_compile_options(debug PRIVATE
 	-g
+    -O0
 )

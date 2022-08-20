@@ -13,6 +13,8 @@ void Grid::init_grid()
     {
         this->grid[i] = new AbstractChessPiece*[8];
         this->fake_grid[i] = new PieceColor[8];
+
+        std::fill(this->grid[i], this->grid[i] + 8, nullptr);
     }
 
     for (int i = 0; i < 8; i ++)
@@ -62,12 +64,9 @@ Grid::Grid(PlaceCommand *commands, int size)
         this->grid[i] = new AbstractChessPiece*[8];
         this->fake_grid[i] = new PieceColor[8];
 
-        for (int j = 0; j < 8; j ++)
-        {
-            this->grid[i][j] = nullptr;
-            this->fake_grid[i][j] = EMPTY;
-        }
-    }
+        std::fill(this->grid[i], this->grid[i] + 8, nullptr);
+        std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
+   }
 
     for (int i = 0; i < size; i ++)
     {
@@ -106,6 +105,8 @@ Grid::Grid(PlaceCommand *commands, int size)
 
         this->grid[pos.x][pos.y] = new_piece;
         this->fake_grid[pos.x][pos.y] = color;
+
+        new_piece = nullptr;
     }
 }
 
@@ -122,7 +123,7 @@ Grid::~Grid()
         delete[] this->grid[i];
         delete[] this->fake_grid[i];
 
-        this->grid[i] = nullptr;
+        this->grid[i]      = nullptr;
         this->fake_grid[i] = nullptr;
     }
 
@@ -147,6 +148,7 @@ bool Grid::move(const Position& piece, const Position& dest)
         return false;
 
     selected_piece->set_position(dest);
+    this->grid[piece.x][piece.y] = nullptr;
 
     if (this->grid[dest.x][dest.y])
         delete this->grid[dest.x][dest.y];

@@ -50,13 +50,14 @@ class AbstractChessPiece
 		AbstractChessPiece(PieceType t): type(t) {}
 		AbstractChessPiece(PieceType t, int x, int y, PieceColor c): type(t), color(c), pos(x, y) {}
 		AbstractChessPiece(PieceType t, const AbstractChessPiece& obj): type(t), color(obj.color), pos(obj.pos) {}
+        virtual ~AbstractChessPiece() = default;
 
   	 	void set_position(const Position& pos) { this->pos = pos; }
 		void set_position(int x, int y) { this->pos = Position(x, y); }
 
 		const Position& get_position() const { return this->pos; }
 		PieceColor get_color() const { return this->color; }
-		PieceType  get_type() const { return this->type; }		
+		PieceType  get_type() const { return this->type; }
 
 		// this function should return a list of absolute positions that the chess piece can occupy
 		virtual const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) = 0;
@@ -75,7 +76,7 @@ class FakeChessPiece
 		PieceType get_type() const { return type; }
 		PieceColor get_color() const { return piece->color; }
 		const Position& get_position() const { return piece->pos; }
-		
+
 		bool is_valid();
 };
 
