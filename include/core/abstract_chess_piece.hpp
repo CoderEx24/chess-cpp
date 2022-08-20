@@ -50,7 +50,7 @@ class AbstractChessPiece
 		AbstractChessPiece(PieceType t): type(t) {}
 		AbstractChessPiece(PieceType t, int x, int y, PieceColor c): type(t), color(c), pos(x, y) {}
 		AbstractChessPiece(PieceType t, const AbstractChessPiece& obj): type(t), color(obj.color), pos(obj.pos) {}
-        virtual ~AbstractChessPiece() = default;
+        virtual ~AbstractChessPiece() { this->possible_moves.clear(); };
 
   	 	void set_position(const Position& pos) { this->pos = pos; }
 		void set_position(int x, int y) { this->pos = Position(x, y); }

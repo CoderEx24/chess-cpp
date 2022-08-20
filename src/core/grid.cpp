@@ -14,6 +14,7 @@ void Grid::init_grid()
         this->grid[i] = new AbstractChessPiece*[8];
         this->fake_grid[i] = new PieceColor[8];
 
+        std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
         std::fill(this->grid[i], this->grid[i] + 8, nullptr);
     }
 
@@ -147,13 +148,15 @@ bool Grid::move(const Position& piece, const Position& dest)
     if (std::find(possible_moves.begin(), possible_moves.end(), dest) == possible_moves.end())
         return false;
 
-    selected_piece->set_position(dest);
     this->grid[piece.x][piece.y] = nullptr;
+    this->fake_grid[piece.x][piece.y] = EMPTY;
 
     if (this->grid[dest.x][dest.y])
         delete this->grid[dest.x][dest.y];
 
+    selected_piece->set_position(dest);
     this->grid[dest.x][dest.y] = selected_piece;
+    this->fake_grid[dest.x][dest.y] = this->current_turn;
 
     this->current_turn = (this->current_turn == WHITE ? BLACK : WHITE);
 
