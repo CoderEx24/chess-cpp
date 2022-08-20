@@ -429,7 +429,7 @@ TEST(TestGrid, test_move_rook)
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 4)));
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 4))->get_type());
-    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 4))->get_color());
+    CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(2, 4))->get_color());
 }
 
 TEST(TestGrid, test_move_knight)
