@@ -340,12 +340,12 @@ TEST(TestGrid, test_turn_switch)
     CHECK_EQUAL(WHITE, grid.get_current_turn());
 
     // moving a white pawn
-    grid.move(Position(6, 0), Position(5, 0));
+    CHECK_TRUE(grid.move(Position(6, 0), Position(5, 0)));
 
     CHECK_EQUAL(BLACK, grid.get_current_turn());
 
     // moving a black pawn
-    grid.move(Position(1, 0), Position(2, 0));
+    CHECK_TRUE(grid.move(Position(1, 0), Position(2, 0)));
 
     CHECK_EQUAL(WHITE, grid.get_current_turn());
 }
@@ -355,14 +355,14 @@ TEST(TestGrid, test_move_pawn_one_step)
     DummyGrid grid;
 
     // checking white pawns
-    grid.move(Position(6, 0), Position(5, 0));
+    CHECK_TRUE(grid.move(Position(6, 0), Position(5, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 0)));
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(5, 0))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 0))->get_color());
 
     // checking black pawns
-    grid.move(Position(1, 0), Position(2, 0));
+    CHECK_TRUE(grid.move(Position(1, 0), Position(2, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 0)));
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(2, 0))->get_type());
@@ -374,14 +374,14 @@ TEST(TestGrid, test_move_pawn_two_steps)
     DummyGrid grid;
 
     // checking white pawns
-    grid.move(Position(6, 0), Position(4, 0));
+    CHECK_TRUE(grid.move(Position(6, 0), Position(4, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 0)));
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(4, 0))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(4, 0))->get_color());
 
     // checking black pawns
-    grid.move(Position(1, 1), Position(3, 1));
+    CHECK_TRUE(grid.move(Position(1, 1), Position(3, 1)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 1)));
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(3, 1))->get_type());
@@ -393,39 +393,39 @@ TEST(TestGrid, test_move_rook)
     DummyGrid grid;
 
     // clear a path for the rooks
-    grid.move(Position(6, 0), Position(4, 0));
-    grid.move(Position(1, 0), Position(3, 0));
+    CHECK_TRUE(grid.move(Position(6, 0), Position(4, 0)));
+    CHECK_TRUE(grid.move(Position(1, 0), Position(3, 0)));
 
     // move white rook
-    grid.move(Position(7, 0), Position(5, 0));
+    CHECK_TRUE(grid.move(Position(7, 0), Position(5, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 0)));
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(5, 0))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 0))->get_color());
 
     // move black rook
-    grid.move(Position(0, 0), Position(2, 0));
+    CHECK_TRUE(grid.move(Position(0, 0), Position(2, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 0)));
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 0))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
 
     // moving the white rook to an open position
-    grid.move(Position(5, 0), Position(5, 4));
+    CHECK_TRUE(grid.move(Position(5, 0), Position(5, 4)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 0)));
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(5, 4))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 4))->get_color());
 
     // moving the black rook to the same column
-    grid.move(Position(2, 0), Position(2, 4));
+    CHECK_TRUE(grid.move(Position(2, 0), Position(2, 4)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 4))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 4))->get_color());
 
     // capturing the black rook
-    grid.move(Position(5, 4), Position(2, 4));
+    CHECK_TRUE(grid.move(Position(5, 4), Position(2, 4)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 4)));
     CHECK_EQUAL(ROOK,    get_piece_at(grid, Position(2, 4))->get_type());
@@ -437,35 +437,35 @@ TEST(TestGrid, test_move_knight)
     DummyGrid grid;
 
     // moving white knight
-    grid.move(Position(7, 1), Position(5, 2));
+    CHECK_TRUE(grid.move(Position(7, 1), Position(5, 2)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 1)));
     CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(5, 2))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 2))->get_color());
 
     // moving black knight
-    grid.move(Position(0, 1), Position(2, 0));
+    CHECK_TRUE(grid.move(Position(0, 1), Position(2, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 1)));
     CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(2, 0))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 0))->get_color());
 
     // moving white knight
-    grid.move(Position(5, 2), Position(4, 0));
+    CHECK_TRUE(grid.move(Position(5, 2), Position(4, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 2)));
     CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(4, 0))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(4, 0))->get_color());
 
     // moving black knight
-    grid.move(Position(2, 0), Position(3, 2));
+    CHECK_TRUE(grid.move(Position(2, 0), Position(3, 2)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
     CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(3, 2))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(3, 2))->get_color());
 
     // moving white knight
-    grid.move(Position(4, 0), Position(3, 2));
+    CHECK_TRUE(grid.move(Position(4, 0), Position(3, 2)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
     CHECK_EQUAL(KNIGHT,  get_piece_at(grid, Position(3, 2))->get_type());
@@ -477,18 +477,18 @@ TEST(TestGrid, test_move_bishop)
     DummyGrid grid;
 
     // clearing the path for the bishops
-    grid.move(Position(6, 4), Position(4, 4));
-    grid.move(Position(1, 1), Position(3, 1));
+    CHECK_TRUE(grid.move(Position(6, 4), Position(4, 4)));
+    CHECK_TRUE(grid.move(Position(1, 1), Position(3, 1)));
 
     // moving white bishop
-    grid.move(Position(7, 5), Position(2, 0));
+    CHECK_TRUE(grid.move(Position(7, 5), Position(2, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 5)));
     CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(2, 0))->get_color());
 
     // capturing white bishop
-    grid.move(Position(0, 2), Position(2, 0));
+    CHECK_TRUE(grid.move(Position(0, 2), Position(2, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 0)));
     CHECK_EQUAL(BISHOP,  get_piece_at(grid, Position(2, 0))->get_type());
@@ -500,32 +500,32 @@ TEST(TestGrid, test_move_queen)
     DummyGrid grid;
 
     // clearing the path for the queens
-    grid.move(Position(6, 3), Position(4, 3));
-    grid.move(Position(1, 3), Position(3, 3));
+    CHECK_TRUE(grid.move(Position(6, 3), Position(4, 3)));
+    CHECK_TRUE(grid.move(Position(1, 3), Position(3, 3)));
 
     // moving white queen
-    grid.move(Position(7, 3), Position(5, 3));
+    CHECK_TRUE(grid.move(Position(7, 3), Position(5, 3)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 3)));
     CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 3))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 3))->get_color());
 
     // moving black queen
-    grid.move(Position(0, 3), Position(2, 3));
+    CHECK_TRUE(grid.move(Position(0, 3), Position(2, 3)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 3)));
     CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(2, 3))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 3))->get_color());
 
     // moving white queen
-    grid.move(Position(5, 3), Position(5, 0));
+    CHECK_TRUE(grid.move(Position(5, 3), Position(5, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(5, 3)));
     CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 0))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 0))->get_color());
 
     // capturing white queen
-    grid.move(Position(2, 3), Position(5, 0));
+    CHECK_TRUE(grid.move(Position(2, 3), Position(5, 0)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(2, 3)));
     CHECK_EQUAL(QUEEN,   get_piece_at(grid, Position(5, 0))->get_type());
@@ -537,32 +537,32 @@ TEST(TestGrid, test_move_king)
     DummyGrid grid;
 
     // clearing the path for the kings
-    grid.move(Position(6, 4), Position(4, 4));
-    grid.move(Position(1, 4), Position(3, 4));
+    CHECK_TRUE(grid.move(Position(6, 4), Position(4, 4)));
+    CHECK_TRUE(grid.move(Position(1, 4), Position(3, 4)));
 
     // moving white king
-    grid.move(Position(7, 4), Position(6, 4));
+    CHECK_TRUE(grid.move(Position(7, 4), Position(6, 4)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 4)));
     CHECK_EQUAL(KING,    get_piece_at(grid, Position(6, 4))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(6, 4))->get_color());
 
     // moving the black king
-    grid.move(Position(0, 4), Position(1, 4));
+    CHECK_TRUE(grid.move(Position(0, 4), Position(1, 4)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(0, 4)));
     CHECK_EQUAL(KING,    get_piece_at(grid, Position(1, 4))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(1, 4))->get_color());
 
     // moving the white king
-    grid.move(Position(6, 4), Position(5, 5));
+    CHECK_TRUE(grid.move(Position(6, 4), Position(5, 5)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(6, 4)));
     CHECK_EQUAL(KING,    get_piece_at(grid, Position(5, 5))->get_type());
     CHECK_EQUAL(WHITE,   get_piece_at(grid, Position(5, 5))->get_color());
 
     // moving the black king
-    grid.move(Position(1, 4), Position(2, 5));
+    CHECK_TRUE(grid.move(Position(1, 4), Position(2, 5)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 4)));
     CHECK_EQUAL(KING,    get_piece_at(grid, Position(2, 5))->get_type());
@@ -574,10 +574,10 @@ TEST(TestGrid, test_winning_condition)
     DummyGrid grid;
 
     // making the 3 move checkmate
-    grid.move(Position(6, 4), Position(4, 4));
-    grid.move(Position(1, 2), Position(3, 2));
-    grid.move(Position(4, 4), Position(3, 2));
-    grid.move(Position(0, 3), Position(3, 0));
+    CHECK_TRUE(grid.move(Position(6, 4), Position(4, 4)));
+    CHECK_TRUE(grid.move(Position(1, 2), Position(3, 2)));
+    CHECK_TRUE(grid.move(Position(4, 4), Position(3, 2)));
+    CHECK_TRUE(grid.move(Position(0, 3), Position(3, 0)));
 
     CHECK_EQUAL(BLACK, grid.get_winner());
 }
@@ -586,12 +586,12 @@ TEST(TestGrid, test_en_passant)
 {
     DummyGrid grid;
 
-    grid.move(Position(6, 0), Position(4, 0));
-    grid.move(Position(1, 1), Position(3, 1));
-    grid.move(Position(4, 0), Position(3, 0));
-    grid.move(Position(3, 1), Position(4, 1));
-    grid.move(Position(6, 2), Position(4, 2));
-    grid.move(Position(4, 1), Position(5, 2));
+    CHECK_TRUE(grid.move(Position(6, 0), Position(4, 0)));
+    CHECK_TRUE(grid.move(Position(1, 1), Position(3, 1)));
+    CHECK_TRUE(grid.move(Position(4, 0), Position(3, 0)));
+    CHECK_TRUE(grid.move(Position(3, 1), Position(4, 1)));
+    CHECK_TRUE(grid.move(Position(6, 2), Position(4, 2)));
+    CHECK_TRUE(grid.move(Position(4, 1), Position(5, 2)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(4, 2)));
     CHECK_EQUAL(PAWN,    get_piece_at(grid, Position(5, 2))->get_type());
@@ -603,13 +603,13 @@ TEST(TestGrid, test_caslting)
     DummyGrid grid;
 
     // castling kingside
-    grid.move(Position(7, 6), Position(5, 7));
-    grid.move(Position(1, 0), Position(2, 0));
-    grid.move(Position(6, 6), Position(4, 6));
-    grid.move(Position(2, 0), Position(3, 0));
-    grid.move(Position(7, 5), Position(6, 6));
-    grid.move(Position(3, 0), Position(4, 0));
-    grid.move(Position(7, 4), Position(7, 6));
+    CHECK_TRUE(grid.move(Position(7, 6), Position(5, 7)));
+    CHECK_TRUE(grid.move(Position(1, 0), Position(2, 0)));
+    CHECK_TRUE(grid.move(Position(6, 6), Position(4, 6)));
+    CHECK_TRUE(grid.move(Position(2, 0), Position(3, 0)));
+    CHECK_TRUE(grid.move(Position(7, 5), Position(6, 6)));
+    CHECK_TRUE(grid.move(Position(3, 0), Position(4, 0)));
+    CHECK_TRUE(grid.move(Position(7, 4), Position(7, 6)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 4)));
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 7)));
@@ -623,15 +623,15 @@ TEST(TestGrid, test_caslting)
     DummyGrid grid2;
 
     // castling queenside
-    grid.move(Position(6, 3), Position(4, 3));
-    grid.move(Position(1, 1), Position(2, 1));
-    grid.move(Position(7, 3), Position(5, 3));
-    grid.move(Position(2, 1), Position(3, 1));
-    grid.move(Position(7, 2), Position(5, 4));
-    grid.move(Position(3, 1), Position(4, 1));
-    grid.move(Position(7, 1), Position(5, 0));
-    grid.move(Position(4, 1), Position(5, 1));
-    grid.move(Position(7, 4), Position(7, 2));
+    CHECK_TRUE(grid.move(Position(6, 3), Position(4, 3)));
+    CHECK_TRUE(grid.move(Position(1, 1), Position(2, 1)));
+    CHECK_TRUE(grid.move(Position(7, 3), Position(5, 3)));
+    CHECK_TRUE(grid.move(Position(2, 1), Position(3, 1)));
+    CHECK_TRUE(grid.move(Position(7, 2), Position(5, 4)));
+    CHECK_TRUE(grid.move(Position(3, 1), Position(4, 1)));
+    CHECK_TRUE(grid.move(Position(7, 1), Position(5, 0)));
+    CHECK_TRUE(grid.move(Position(4, 1), Position(5, 1)));
+    CHECK_TRUE(grid.move(Position(7, 4), Position(7, 2)));
 
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 4)));
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(7, 0)));

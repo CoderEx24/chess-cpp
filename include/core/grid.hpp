@@ -41,7 +41,7 @@ class Grid
 		PieceColor get_winner() const { return winner; }
 		FakeGrid get_fake_grid() const { return fake_grid; }
 
-		void move(const Position& piece, const Position& dest);
+		bool move(const Position& piece, const Position& dest);
 		const std::vector<Position>& get_possible_moves(const Position& piece);
 
 };
