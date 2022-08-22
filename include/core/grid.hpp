@@ -20,6 +20,7 @@ class Grid
 		PieceColor current_turn, winner;
 		King *threatened_king, *white_king, *black_king;
 		std::vector<Position> current_possible_moves;
+        std::vector<AbstractChessPiece*> *white_pieces, *black_pieces;
 
 		void init_grid();
 

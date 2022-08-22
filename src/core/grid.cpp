@@ -8,6 +8,8 @@ void Grid::init_grid()
 {
     this->grid = new AbstractChessPiece**[8];
     this->fake_grid = new PieceColor*[8];
+    this->white_pieces = new std::vector<AbstractChessPiece*>(16);
+    this->black_pieces = new std::vector<AbstractChessPiece*>(16);
 
     for (int i = 0; i < 8; i ++)
     {
@@ -18,16 +20,15 @@ void Grid::init_grid()
         std::fill(this->grid[i], this->grid[i] + 8, nullptr);
     }
 
+    std::fill(this->fake_grid[0], this->fake_grid[0] + 8, BLACK);
+    std::fill(this->fake_grid[1], this->fake_grid[1] + 8, BLACK);
+    std::fill(this->fake_grid[6], this->fake_grid[6] + 8, WHITE);
+    std::fill(this->fake_grid[7], this->fake_grid[7] + 8, WHITE);
+
     for (int i = 0; i < 8; i ++)
     {
         this->grid[1][i] = new Pawn(1, i, BLACK);
         this->grid[6][i] = new Pawn(6, i, WHITE);
-
-        this->fake_grid[0][i] = BLACK;
-        this->fake_grid[1][i] = BLACK;
-        this->fake_grid[6][i] = WHITE;
-        this->fake_grid[7][i] = WHITE;
-
     }
 
     this->grid[0][0] = new Rook(0, 0, BLACK);
@@ -53,12 +54,21 @@ void Grid::init_grid()
 
     this->grid[7][3] = new Queen(7, 3, WHITE);
     this->grid[7][4] = this->white_king = new King(7, 4, WHITE);
+
+    std::copy(this->grid[0], this->grid[0] + 8, this->black_pieces->begin());
+    std::copy(this->grid[1], this->grid[1] + 8, this->black_pieces->begin() + 8);
+
+    std::copy(this->grid[6], this->grid[6] + 8, this->white_pieces->begin());
+    std::copy(this->grid[7], this->grid[7] + 8, this->white_pieces->begin() + 8);
 }
 
 Grid::Grid(PlaceCommand *commands, int size)
 {
     this->grid = new AbstractChessPiece**[8];
     this->fake_grid = new PieceColor*[8];
+
+    this->white_pieces = new std::vector<AbstractChessPiece*>(16);
+    this->black_pieces = new std::vector<AbstractChessPiece*>(16);
 
     for (int i = 0; i < 8; i ++)
     {
@@ -107,6 +117,9 @@ Grid::Grid(PlaceCommand *commands, int size)
         this->grid[pos.x][pos.y] = new_piece;
         this->fake_grid[pos.x][pos.y] = color;
 
+        std::vector<AbstractChessPiece*> *pieces_set = (color == WHITE) ? this->white_pieces : this->black_pieces;
+        pieces_set->push_back(new_piece);
+
         new_piece = nullptr;
     }
 }
@@ -130,11 +143,15 @@ Grid::~Grid()
 
     delete[] this->grid;
     delete[] this->fake_grid;
+    delete   this->white_pieces;
+    delete   this->black_pieces;
 
     this->grid       = nullptr;
     this->fake_grid  = nullptr;
     this->white_king = nullptr;
     this->black_king = nullptr;
+    this->white_pieces = nullptr;
+    this->black_pieces = nullptr;
 }
 
 bool Grid::move(const Position& piece, const Position& dest)
