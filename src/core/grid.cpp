@@ -160,6 +160,7 @@ bool Grid::move(const Position& piece, const Position& dest)
         return false;
 
     AbstractChessPiece *selected_piece = this->grid[piece.x][piece.y];
+    std::vector<AbstractChessPiece*> *opponent_pieces_set = (this->current_turn == WHITE) ? this->black_pieces : this->white_pieces ;
     std::vector<Position> possible_moves(selected_piece->get_valid_positions(this->fake_grid));
 
     if (std::find(possible_moves.begin(), possible_moves.end(), dest) == possible_moves.end())
@@ -168,8 +169,13 @@ bool Grid::move(const Position& piece, const Position& dest)
     this->grid[piece.x][piece.y] = nullptr;
     this->fake_grid[piece.x][piece.y] = EMPTY;
 
-    if (this->grid[dest.x][dest.y])
-        delete this->grid[dest.x][dest.y];
+    AbstractChessPiece *target = this->grid[dest.x][dest.y];
+    if (target)
+    {
+        auto it = std::find(opponent_pieces_set->begin(), opponent_pieces_set->end(), target);
+        opponent_pieces_set->erase(it);
+        delete target;
+    }
 
     selected_piece->set_position(dest);
     this->grid[dest.x][dest.y] = selected_piece;
