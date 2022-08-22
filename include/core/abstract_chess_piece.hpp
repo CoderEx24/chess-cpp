@@ -33,6 +33,11 @@ struct Position
 	Position operator*(float a) { return Position(a * this->x, a * this->y); }
 };
 
+template<> struct std::hash<Position>
+{
+    std::size_t operator()(const Position&) const;
+};
+
 inline bool in_bounds(const Position& point)
 {
 	return point.x >= 0 && point.x < 8 && point.y >= 0 && point.y < 8;

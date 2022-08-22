@@ -36,6 +36,7 @@ add_executable(debug
 )
 
 add_executable(tests
+	${PROJECT_SOURCE_DIR}/core/abstract_chess_piece.cpp
 	${PROJECT_SOURCE_DIR}/core/pawn.cpp
 	${PROJECT_SOURCE_DIR}/core/rook.cpp
 	${PROJECT_SOURCE_DIR}/core/knight.cpp

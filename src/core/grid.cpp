@@ -6,6 +6,9 @@
 
 void Grid::init_grid()
 {
+    std::hash<Position> h;
+    std::cout << "hash of (3, 2) = " << h(Position(3, 2)) << '\n';
+
     this->grid = new AbstractChessPiece**[8];
     this->fake_grid = new PieceColor*[8];
     this->white_pieces = new std::vector<AbstractChessPiece*>(16);
@@ -159,6 +162,7 @@ bool Grid::move(const Position& piece, const Position& dest)
     if (!in_bounds(piece) || !in_bounds(dest))
         return false;
 
+    // making a regular move
     AbstractChessPiece *selected_piece = this->grid[piece.x][piece.y];
     std::vector<AbstractChessPiece*> *opponent_pieces_set = (this->current_turn == WHITE) ? this->black_pieces : this->white_pieces ;
     std::vector<Position> possible_moves(selected_piece->get_valid_positions(this->fake_grid));
