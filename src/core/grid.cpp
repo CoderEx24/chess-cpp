@@ -1,13 +1,10 @@
 #include "core/grid.hpp"
-#include <vector>
 #include <algorithm>
-#include <iostream>
-#include <iomanip>
 
 void Grid::init_grid()
 {
-    std::hash<Position> h;
-    std::cout << "hash of (3, 2) = " << h(Position(3, 2)) << '\n';
+
+    /* std::cout << "hash of (1, 2) = " << std::hash<Position>()(Position(1, 2)) << '\n'; */
 
     this->grid = new AbstractChessPiece**[8];
     this->fake_grid = new PieceColor*[8];

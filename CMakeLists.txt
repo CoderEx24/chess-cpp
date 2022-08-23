@@ -5,7 +5,7 @@ project(chess-cpp VERSION 0.1)
 find_package(CppUTest REQUIRED)
 
 option(DEFINE_QUEEN_EZ_IMP "Enables the QUEEN_EZ_IMP macro to compile with the eazy implementation of the queen" OFF)
-set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_CXX_COMPILER g++)
 set(TEST_SOURCE_DIR "${PROJECT_SOURCE_DIR}/tests")
 set(PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 set(PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
@@ -72,7 +72,7 @@ target_include_directories(tests PUBLIC
 target_compile_options(tests PUBLIC
 	-g
     -O0
-	-include /usr/local/include/CppUTest/MemoryLeakDetectorNewMacros.h
+    -include ${TEST_SOURCE_DIR}/macros.hpp
 )
 
 set_target_properties(tests PROPERTIES

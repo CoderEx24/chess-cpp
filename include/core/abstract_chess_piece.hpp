@@ -26,12 +26,17 @@ struct Position
 	int x, y;
 	Position(): x(0), y(0) {}
 	Position(int x, int y): x(x), y(y) {}
+    Position(const std::string&);
 
 	bool operator==(const Position& rhs) { return x == rhs.x && y == rhs.y; }
 	bool operator!=(const Position& rhs) { return x != rhs.x || y != rhs.y; }
 	Position operator+(const Position& rhs) { return Position(this->x + rhs.x, this->y + rhs.y); }
 	Position operator*(float a) { return Position(a * this->x, a * this->y); }
+
+    std::string to_string() const;
 };
+
+std::ostream& operator<<(std::ostream&, const Position&);
 
 template<> struct std::hash<Position>
 {

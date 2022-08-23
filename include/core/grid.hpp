@@ -1,8 +1,6 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include <vector>
-#include <unordered_map>
 
 #include "core/abstract_chess_piece.hpp"
 #include "core/pawn.hpp"
@@ -11,6 +9,9 @@
 #include "core/knight.hpp"
 #include "core/queen.hpp"
 #include "core/king.hpp"
+
+#include <unordered_map>
+#include <vector>
 
 using PlaceCommand = uint16_t;
 
@@ -22,7 +23,7 @@ class Grid
 		bool game_over;
 		PieceColor current_turn, winner;
 		King *threatened_king, *white_king, *black_king;
-        /* std::unordered_map<Position, std::vector<Position>> current_possible_moves; */
+        std::unordered_map<Position, std::vector<Position>> current_possible_moves;
         std::vector<AbstractChessPiece*> *white_pieces, *black_pieces;
 
 		void init_grid();
