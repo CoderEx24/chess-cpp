@@ -28,10 +28,10 @@ struct Position
 	Position(int x, int y): x(x), y(y) {}
     Position(const std::string&);
 
-	bool operator==(const Position& rhs) { return x == rhs.x && y == rhs.y; }
-	bool operator!=(const Position& rhs) { return x != rhs.x || y != rhs.y; }
-	Position operator+(const Position& rhs) { return Position(this->x + rhs.x, this->y + rhs.y); }
-	Position operator*(float a) { return Position(a * this->x, a * this->y); }
+	bool operator==(const Position& rhs) const { return x == rhs.x && y == rhs.y; }
+	bool operator!=(const Position& rhs) const { return x != rhs.x || y != rhs.y; }
+	Position operator+(const Position& rhs) const { return Position(this->x + rhs.x, this->y + rhs.y); }
+	Position operator*(float a) const { return Position(a * this->x, a * this->y); }
 
     std::string to_string() const;
 };
