@@ -73,8 +73,13 @@ target_compile_options(tests PUBLIC
 	-g
     -O0
 	-include /usr/local/include/CppUTest/MemoryLeakDetectorNewMacros.h
-    -o tests_exe
-	)
+)
+
+set_target_properties(tests PROPERTIES
+    OUTPUT_NAME "tests_exe"
+    CXX_STANDARD 17
+)
+
 
 target_include_directories(chess PUBLIC
 	/usr/include
