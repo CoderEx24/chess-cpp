@@ -1,5 +1,6 @@
 #include "core/grid.hpp"
 #include <algorithm>
+#include <iostream>
 
 void Grid::init_grid()
 {
@@ -81,13 +82,14 @@ Grid::Grid(PlaceCommand *commands, int size)
 
     for (int i = 0; i < size; i ++)
     {
-        PlaceCommand command = commands[i];
-        PieceColor color = 1 + ((command & 0b1000000000) >> 9);
-        Position   pos   = Position(command & 0b111, (command & 0b111000) >> 3);
+        Position pos;
+        PieceType type;
+        PieceColor color;
+        Grid::decode(commands[i], pos, type, color);
 
         AbstractChessPiece *new_piece = nullptr;
 
-        switch ((command & 0b111000000) >> 6)
+        switch (type)
         {
             case PAWN:
                 new_piece = new Pawn(pos.x, pos.y, color);

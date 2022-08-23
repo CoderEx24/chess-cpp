@@ -42,6 +42,13 @@ class Grid
                 ((color - 1) << 9);
         }
 
+        inline static void decode(PlaceCommand cmd, Position& pos, PieceType& type, PieceColor& color)
+        {
+            pos   = Position(cmd & 0b111, (cmd & 0b111000) >> 3);
+            type  = (cmd & 0b111000000) >> 6;
+            color = 1 + ((cmd & 0b1000000000) >> 9);
+        }
+
 		bool is_game_over() const { return game_over; }
 		PieceColor get_winner() const { return winner; }
 		FakeGrid get_fake_grid() const { return fake_grid; }
