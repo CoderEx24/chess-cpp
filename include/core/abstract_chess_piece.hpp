@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
 
 #define EMPTY 0
 #define WHITE 1
@@ -28,9 +29,12 @@ struct Position
 	Position(int x, int y): x(x), y(y) {}
     Position(const std::string&);
 
+    float len() const { return sqrt(pow(this->x, 2) + pow(this->y, 2)); }
+
 	bool operator==(const Position& rhs) const { return x == rhs.x && y == rhs.y; }
 	bool operator!=(const Position& rhs) const { return x != rhs.x || y != rhs.y; }
 	Position operator+(const Position& rhs) const { return Position(this->x + rhs.x, this->y + rhs.y); }
+    Position operator-(const Position& rhs) const { return *this + (rhs * -1); }
 	Position operator*(float a) const { return Position(a * this->x, a * this->y); }
 
     std::string to_string() const;
