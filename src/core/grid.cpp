@@ -190,17 +190,89 @@ bool Grid::move(const Position& piece, const Position& dest)
 }
 
 // TODO: potential of memory leak, use smart pointers instead of raw ones
-const std::vector<Position>& Grid::get_possible_moves(const Position& piece)
+const std::vector<Position>* Grid::get_possible_moves(const Position& piece)
 {
     std::vector<Position> *pos_list = new std::vector<Position>(0);
 
     if (this->grid[piece.x][piece.y])
     {
         delete pos_list;
-        pos_list = new std::vector<Position>(this->grid[piece.x][piece.y]->get_valid_positions(this->fake_grid));
+
+        AbstractChessPiece *the_piece = this->grid[piece.x][piece.y];
+
+        pos_list = new std::vector<Position>(the_piece->get_valid_positions(this->fake_grid));
+
+        if (the_piece->get_type() == KING)
+            this->filter_king_moves(*pos_list, the_piece->get_color());
+
     }
 
-    return *pos_list;
+    return pos_list;
+}
+
+void Grid::filter_king_moves(std::vector<Position>& king_moves, PieceColor color)
+{
+    King *the_king = (color == WHITE) ? this->white_king : this->black_king;
+    std::vector<AbstractChessPiece*> *opponent_piece_set = (color == WHITE) ? this->black_pieces : this->white_pieces;
+
+    auto pred = [=](Position pos) {
+        for (auto piece : *opponent_piece_set)
+        {
+            std::vector<Position> pos_list = piece->get_valid_positions(this->fake_grid);
+
+            for (auto king_pos : king_moves)
+                if (pos_list.end() != std::find(pos_list.begin(), pos_list.end(), king_pos))
+                    return true;
+        }
+        return false;
+    };
+
+    king_moves.erase(std::remove_if(king_moves.begin(), king_moves.end(), pred), king_moves.end());
+}
+
+void Grid::analyse_king_position()
+{
+    King *the_king = (this->current_turn == WHITE) ? this->white_king : this->black_king;
+    std::vector<AbstractChessPiece*> *current_piece_set = (this->current_turn == WHITE) ? this->white_pieces : this->black_pieces;
+    std::vector<AbstractChessPiece*> *opponent_piece_set = (this->current_turn == BLACK) ? this->white_pieces : this->black_pieces;
+
+    std::vector<AbstractChessPiece*> attacking_pieces(opponent_piece_set->size());
+
+    // now, check every possible position that the king can be attacked from
+    // this is done by looping through all the opponent pieces, and checking
+    // whether there is an opponent piece that can attack the king.
+
+    for (auto piece : *opponent_piece_set)
+    {
+        std::vector<Position> pos_list = piece->get_valid_positions(this->fake_grid);
+        if (pos_list.end() != std::find(pos_list.begin(), pos_list.end(), the_king->get_position()))
+            attacking_pieces.push_back(piece);
+    }
+
+    // if there is no attacking pieces, then the king is safe and
+    // no further analysis is required
+    if (attacking_pieces.size() == 0)
+        return;
+    this->current_possible_moves.clear();
+
+    // the king is threathened, now we need to figure out the possible moves
+    // that can save him
+    //
+    // there are two possible ways with which the king can be saved,
+    // moving the king or blocking the attacking piece.
+
+
+    // the first saving method, moving the king, is quite easy
+    // generate the king's valid positions and remove from them
+    // and other compromising positions (because the king cannot move to a check)
+    std::vector<Position> king_moves = the_king->get_valid_positions(this->fake_grid);
+    this->filter_king_moves(king_moves, this->current_turn);
+
+    {
+        std::vector<Position> &temp = this->current_possible_moves[the_king->get_position()];
+        std::copy(king_moves.begin(), king_moves.end(), temp.begin());
+    }
+
 }
 
 /*PlaceCommand Grid::encode(Position, PieceType, PieceColor)
@@ -208,4 +280,3 @@ const std::vector<Position>& Grid::get_possible_moves(const Position& piece)
     return 0;
 }
 */
-

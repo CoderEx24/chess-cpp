@@ -17,6 +17,10 @@ using PlaceCommand = uint16_t;
 
 class Grid
 {
+    private:
+        void analyse_king_position();
+        void filter_king_moves(std::vector<Position>&, PieceColor);
+
 	protected:
 		AbstractChessPiece ***grid;
 		FakeGrid fake_grid;
@@ -54,7 +58,7 @@ class Grid
 		FakeGrid get_fake_grid() const { return fake_grid; }
 
 		bool move(const Position& piece, const Position& dest);
-		const std::vector<Position>& get_possible_moves(const Position& piece);
+		const std::vector<Position>* get_possible_moves(const Position& piece);
 
 };
 
