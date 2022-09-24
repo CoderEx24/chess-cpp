@@ -1,4 +1,5 @@
 #include <CppUTest/TestHarness.h>
+#include <algorithm>
 #include "core/grid.hpp"
 
 class DummyGrid : public Grid
@@ -575,6 +576,34 @@ TEST(TestGrid, test_move_king)
     CHECK_EQUAL(nullptr, get_piece_at(grid, Position(1, 4)));
     CHECK_EQUAL(KING,    get_piece_at(grid, Position(2, 5))->get_type());
     CHECK_EQUAL(BLACK,   get_piece_at(grid, Position(2, 5))->get_color());
+}
+
+TEST(TestGrid, test_attacking_king_positions)
+{
+    PlaceCommand grid_build[] {
+        Grid::encode(Position(4, 3), KING, WHITE),
+        Grid::encode(Position(2, 5), ROOK, BLACK),
+    };
+
+    DummyGrid grid(grid_build, 2);
+
+    CHECK_TRUE(grid.move(Position(4, 3), Position(4, 2)));
+    CHECK_TRUE(grid.move(Position(2, 5), Position(2, 3)));
+
+    const std::vector<Position> *king_possible_moves = grid.get_possible_moves(Position(4, 2));
+
+    auto start_it = king_possible_moves->cbegin();
+    auto end_it = king_possible_moves->cend();
+
+    CHECK_EQUAL(5, king_possible_moves->size());
+
+    CHECK(end_it != std::find(start_it, end_it, Position(3, 2)));
+    CHECK(end_it != std::find(start_it, end_it, Position(3, 1)));
+    CHECK(end_it != std::find(start_it, end_it, Position(4, 1)));
+    CHECK(end_it != std::find(start_it, end_it, Position(5, 1)));
+    CHECK(end_it != std::find(start_it, end_it, Position(5, 2)));
+
+    delete king_possible_moves;
 }
 
 TEST(TestGrid, test_winning_condition)
