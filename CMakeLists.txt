@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 project(chess-cpp VERSION 0.1)
 
 find_package(CppUTest REQUIRED)
+find_package(SFML COMPONENTS window system graphics REQUIRED)
+find_package(TGUI REQUIRED)
 
 option(DEFINE_QUEEN_EZ_IMP "Enables the QUEEN_EZ_IMP macro to compile with the eazy implementation of the queen" OFF)
 set(CMAKE_CXX_COMPILER g++)
@@ -23,6 +25,7 @@ add_executable(chess
 )
 
 add_executable(debug
+    ${PROJECT_SOURCE_DIR}/core/abstract_chess_piece.cpp
 	${PROJECT_SOURCE_DIR}/core/pawn.cpp
 	${PROJECT_SOURCE_DIR}/core/rook.cpp
 	${PROJECT_SOURCE_DIR}/core/knight.cpp
@@ -100,4 +103,11 @@ target_include_directories(debug PRIVATE
 target_compile_options(debug PRIVATE
 	-g
     -O0
+)
+
+target_link_libraries(debug PRIVATE
+    sfml-window
+    sfml-graphics
+    sfml-system
+    tgui
 )
