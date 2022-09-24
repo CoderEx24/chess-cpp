@@ -230,22 +230,24 @@ const std::vector<Position>* Grid::get_possible_moves(const Position& piece)
 
 void Grid::filter_king_moves(std::vector<Position>& king_moves, PieceColor color)
 {
+
     King *the_king = (color == WHITE) ? this->white_king : this->black_king;
     std::vector<AbstractChessPiece*> *opponent_piece_set = (color == WHITE) ? this->black_pieces : this->white_pieces;
 
-    auto pred = [=](Position pos) {
+    auto pred = [&](Position pos)
+    {
         for (auto piece : *opponent_piece_set)
         {
-            std::vector<Position> pos_list = piece->get_valid_positions(this->fake_grid);
+            std::vector<Position> pos_list(piece->get_valid_positions(this->fake_grid));
 
-            for (auto king_pos : king_moves)
-                if (pos_list.end() != std::find(pos_list.begin(), pos_list.end(), king_pos))
-                    return true;
+            if (pos_list.end() != std::find(pos_list.begin(), pos_list.end(), pos))
+                return true;
         }
         return false;
     };
 
     king_moves.erase(std::remove_if(king_moves.begin(), king_moves.end(), pred), king_moves.end());
+
 }
 
 void Grid::analyse_king_position()
