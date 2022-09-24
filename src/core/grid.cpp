@@ -204,6 +204,14 @@ bool Grid::move(const Position& piece, const Position& dest)
 
     this->current_turn = (this->current_turn == WHITE ? BLACK : WHITE);
 
+    this->analyse_king_position();
+
+    if (this->threatened_king && this->current_possible_moves.size() == 0)
+    {
+        this->game_over = true;
+        this->winner = OPPOSITE_COLOR(this->current_turn);
+    }
+
     return true;
 }
 
@@ -256,7 +264,7 @@ void Grid::analyse_king_position()
     std::vector<AbstractChessPiece*> *current_piece_set = (this->current_turn == WHITE) ? this->white_pieces : this->black_pieces;
     std::vector<AbstractChessPiece*> *opponent_piece_set = (this->current_turn == BLACK) ? this->white_pieces : this->black_pieces;
 
-    std::vector<AbstractChessPiece*> attacking_pieces(opponent_piece_set->size());
+    std::vector<AbstractChessPiece*> attacking_pieces;
 
     // now, check every possible position that the king can be attacked from
     // this is done by looping through all the opponent pieces, and checking
@@ -273,7 +281,9 @@ void Grid::analyse_king_position()
     // no further analysis is required
     if (attacking_pieces.size() == 0)
         return;
+
     this->current_possible_moves.clear();
+    this->threatened_king = the_king;
 
     // the king is threathened, now we need to figure out the possible moves
     // that can save him
@@ -284,13 +294,40 @@ void Grid::analyse_king_position()
 
     // the first saving method, moving the king, is quite easy
     // generate the king's valid positions and remove from them
-    // and other compromising positions (because the king cannot move to a check)
+    // all attacked squares (because the king cannot move to a check)
     std::vector<Position> king_moves = the_king->get_valid_positions(this->fake_grid);
     this->filter_king_moves(king_moves, this->current_turn);
 
+    if (king_moves.size() > 0)
+        this->current_possible_moves[the_king->get_position()] = king_moves;
+//    {
+//        std::vector<Position> &temp = this->current_possible_moves[the_king->get_position()];
+//        std::copy(king_moves.begin(), king_moves.end(), temp.begin());
+//    }
+
+    // the second method, is to intercept the path between the king and the attacking piece.
+    // We loop through each player's pieces' possible positions, and see whether that position
+    // lies between the king and the attacking piece. if so, then this piece can save the king.
+
+    for (auto friend_piece : *current_piece_set)
     {
-        std::vector<Position> &temp = this->current_possible_moves[the_king->get_position()];
-        std::copy(king_moves.begin(), king_moves.end(), temp.begin());
+        std::vector<Position> pos_list(friend_piece->get_valid_positions(this->fake_grid));
+
+        for (auto pos : pos_list)
+        {
+            for (auto enemy_piece : attacking_pieces)
+            {
+                Position enemy_pos_diff = enemy_piece->get_position() - pos;
+                Position pos_king_diff = the_king->get_position() - pos;
+                Position enemy_king_diff = the_king->get_position() - enemy_piece->get_position();
+
+                if (pos == enemy_piece->get_position() ||
+                        (enemy_pos_diff + pos_king_diff == enemy_king_diff &&
+                        enemy_pos_diff.len() < enemy_king_diff.len() &&
+                        pos_king_diff.len() < enemy_king_diff.len()))
+                    this->current_possible_moves[friend_piece->get_position()].push_back(pos);
+            }
+        }
     }
 
 }
