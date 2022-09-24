@@ -65,11 +65,15 @@ void Grid::init_grid()
 
 Grid::Grid(PlaceCommand *commands, int size)
 {
+    int white_count = 0, black_count = 0;
+
     this->grid = new AbstractChessPiece**[8];
     this->fake_grid = new PieceColor*[8];
 
     this->white_pieces = new std::vector<AbstractChessPiece*>(16);
     this->black_pieces = new std::vector<AbstractChessPiece*>(16);
+
+    this->current_turn = WHITE;
 
     for (int i = 0; i < 8; i ++)
     {
@@ -78,7 +82,7 @@ Grid::Grid(PlaceCommand *commands, int size)
 
         std::fill(this->grid[i], this->grid[i] + 8, nullptr);
         std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
-   }
+    }
 
     for (int i = 0; i < size; i ++)
     {
@@ -113,6 +117,11 @@ Grid::Grid(PlaceCommand *commands, int size)
 
             case KING:
                 new_piece = new King(pos.x, pos.y, color);
+                if (color == WHITE)
+                    this->white_king = dynamic_cast<King*>(new_piece);
+                else
+                    this->black_king = dynamic_cast<King*>(new_piece);
+
                 break;
         }
 
@@ -120,10 +129,12 @@ Grid::Grid(PlaceCommand *commands, int size)
         this->fake_grid[pos.x][pos.y] = color;
 
         std::vector<AbstractChessPiece*> *pieces_set = (color == WHITE) ? this->white_pieces : this->black_pieces;
-        pieces_set->push_back(new_piece);
+        (*pieces_set)[(color == WHITE) ? white_count++ : black_count++] = new_piece;
 
-        new_piece = nullptr;
     }
+    this->white_pieces->resize(white_count);
+    this->black_pieces->resize(black_count);
+
 }
 
 Grid::~Grid()
