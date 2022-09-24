@@ -174,8 +174,15 @@ bool Grid::move(const Position& piece, const Position& dest)
 
     // making a regular move
     AbstractChessPiece *selected_piece = this->grid[piece.x][piece.y];
+
+    if (!selected_piece)
+        return false;
+
     std::vector<AbstractChessPiece*> *opponent_pieces_set = (this->current_turn == WHITE) ? this->black_pieces : this->white_pieces ;
     std::vector<Position> possible_moves(selected_piece->get_valid_positions(this->fake_grid));
+
+    if (selected_piece->get_type() == KING)
+        this->filter_king_moves(possible_moves, this->current_turn);
 
     if (std::find(possible_moves.begin(), possible_moves.end(), dest) == possible_moves.end())
         return false;
