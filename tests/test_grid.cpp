@@ -611,11 +611,12 @@ TEST(TestGrid, test_winning_condition)
     DummyGrid grid;
 
     // making the 3 move checkmate
-    CHECK_TRUE(grid.move(Position(6, 4), Position(4, 4)));
-    CHECK_TRUE(grid.move(Position(1, 2), Position(3, 2)));
-    CHECK_TRUE(grid.move(Position(4, 4), Position(3, 2)));
-    CHECK_TRUE(grid.move(Position(0, 3), Position(3, 0)));
+    CHECK_TRUE(grid.move(Position(6, 5), Position(4, 5)));
+    CHECK_TRUE(grid.move(Position(1, 4), Position(3, 4)));
+    CHECK_TRUE(grid.move(Position(4, 5), Position(3, 4)));
+    CHECK_TRUE(grid.move(Position(0, 3), Position(4, 7)));
 
+    CHECK_TRUE(grid.is_game_over());
     CHECK_EQUAL(BLACK, grid.get_winner());
 }
 
