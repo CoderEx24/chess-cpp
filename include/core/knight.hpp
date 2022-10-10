@@ -9,7 +9,7 @@ class Knight : public AbstractChessPiece
 		Knight(): AbstractChessPiece(KNIGHT) {}
 		Knight(int x, int y, PieceColor c): AbstractChessPiece(KNIGHT, x, y, c) {}
 
-		const std::vector<Position>& get_valid_positions(PieceColor **occupied_positions) override;
+		const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) override;
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "core/bishop.hpp"
 
-const std::vector<Position>& Bishop::get_valid_positions(FakeGrid occupied_positions)
+const std::vector<Position>& Bishop::get_valid_positions(FakeGrid occupied_positions) 
 {
 	possible_moves.clear();
 
@@ -17,11 +17,11 @@ const std::vector<Position>& Bishop::get_valid_positions(FakeGrid occupied_posit
 
 		point_to_add = this->pos + OFFSETS[i % 4] * ((i / 4) + 1);
 		
-		if (!in_bounds(point_to_add) || occupied_positions[point_to_add.x][point_to_add.y] != EMPTY)
+		if (!in_bounds(point_to_add) || occupied_positions[point_to_add.x][point_to_add.y].color != EMPTY)
 			is_blocked[i % 4] = true;
 		
 		if (in_bounds(point_to_add) && 
-				occupied_positions[point_to_add.x][point_to_add.y] != this->color)
+				occupied_positions[point_to_add.x][point_to_add.y].color != this->color)
 			possible_moves.push_back(point_to_add);
 		
 		all_blocked = is_blocked[0] && is_blocked[1] && is_blocked[2] && is_blocked[3];

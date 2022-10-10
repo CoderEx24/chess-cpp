@@ -48,11 +48,11 @@ const std::vector<Position>& Queen::get_valid_positions(FakeGrid occupied_positi
 		if (is_blocked[i % 8]) continue;
 
 		if (!in_bounds(point_to_add) || 
-				occupied_positions[point_to_add.x][point_to_add.y] != EMPTY)
+				occupied_positions[point_to_add.x][point_to_add.y].color != EMPTY)
 			is_blocked[i % 8] = true;
 
 		if (in_bounds(point_to_add) &&
-				occupied_positions[point_to_add.x][point_to_add.y] != this->color)
+				occupied_positions[point_to_add.x][point_to_add.y].color != this->color)
 			possible_moves.push_back(point_to_add);
 
 		all_blocked = is_blocked[0] &&

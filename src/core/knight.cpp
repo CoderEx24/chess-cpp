@@ -20,7 +20,7 @@ const std::vector<Position>& Knight::get_valid_positions(FakeGrid occupied_posit
 	{
 		point_to_add = this->pos + OFFSETS[i];
 		if (in_bounds(point_to_add) &&
-				occupied_positions[point_to_add.x][point_to_add.y] != this->color)
+				occupied_positions[point_to_add.x][point_to_add.y].color != this->color)
 			possible_moves.push_back(point_to_add);
 	}
 
