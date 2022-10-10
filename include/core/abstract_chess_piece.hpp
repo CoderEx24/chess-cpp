@@ -20,25 +20,52 @@
 
 using PieceColor = unsigned short;
 using PieceType  = unsigned short;
-using FakeGrid   = PieceColor**;
+
+union FakeChessPiece
+{
+	struct
+	{
+		PieceColor color: 2;
+		PieceType type: 3;
+		int x: 3;
+		int y: 3;
+	};
+	
+	uint16_t data: 11;
+};
+
+inline uint16_t encode_piece(PieceColor color, PieceType type, int x, int y)
+{
+	return color |
+		(type << 2) |
+		(x << 5) |
+		(y << 8);
+}
+
+using FakeGrid   = FakeChessPiece**;
 
 struct Position
 {
 	int x, y;
 	Position(): x(0), y(0) {}
 	Position(int x, int y): x(x), y(y) {}
-    Position(const std::string&);
-
-    float len() const { return sqrt(pow(this->x, 2) + pow(this->y, 2)); }
+	Position(const std::string&);
+	
+    	float len() const { return sqrt(pow(this->x, 2) + pow(this->y, 2)); }
 
 	bool operator==(const Position& rhs) const { return x == rhs.x && y == rhs.y; }
 	bool operator!=(const Position& rhs) const { return x != rhs.x || y != rhs.y; }
 	Position operator+(const Position& rhs) const { return Position(this->x + rhs.x, this->y + rhs.y); }
-    Position operator-(const Position& rhs) const { return *this + (rhs * -1); }
+	Position operator-(const Position& rhs) const { return *this + (rhs * -1); }
 	Position operator*(float a) const { return Position(a * this->x, a * this->y); }
 
     std::string to_string() const;
 };
+
+inline uint16_t encode_piece(PieceColor color, PieceType type, Position pos)
+{
+	return encode_piece(color, type, pos.x, pos.y);
+}
 
 std::ostream& operator<<(std::ostream&, const Position&);
 
@@ -64,7 +91,7 @@ class AbstractChessPiece
 		AbstractChessPiece(PieceType t): type(t) {}
 		AbstractChessPiece(PieceType t, int x, int y, PieceColor c): type(t), color(c), pos(x, y) {}
 		AbstractChessPiece(PieceType t, const AbstractChessPiece& obj): type(t), color(obj.color), pos(obj.pos) {}
-        virtual ~AbstractChessPiece() { this->possible_moves.clear(); };
+	        virtual ~AbstractChessPiece() { this->possible_moves.clear(); };
 
   	 	void set_position(const Position& pos) { this->pos = pos; }
 		void set_position(int x, int y) { this->pos = Position(x, y); }
@@ -76,22 +103,11 @@ class AbstractChessPiece
 		// this function should return a list of absolute positions that the chess piece can occupy
 		virtual const std::vector<Position>& get_valid_positions(FakeGrid occupied_positions) = 0;
 
-	friend class FakeChessPiece;
 };
 
-class FakeChessPiece
+inline uint16_t encode_piece(const AbstractChessPiece* piece)
 {
-	const AbstractChessPiece *piece;
-	PieceType type;
-
-	public:
-		FakeChessPiece(const AbstractChessPiece *p);
-
-		PieceType get_type() const { return type; }
-		PieceColor get_color() const { return piece->color; }
-		const Position& get_position() const { return piece->pos; }
-
-		bool is_valid();
-};
+	return encode_piece(piece->get_color(), piece->get_type(), piece->get_position());
+}
 
 #endif
