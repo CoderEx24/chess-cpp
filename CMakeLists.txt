@@ -24,7 +24,7 @@ add_executable(chess
 	${PROJECT_SOURCE_DIR}/ui/main_window.cpp
 )
 
-add_executable(debug
+add_executable(debug 
     ${PROJECT_SOURCE_DIR}/core/abstract_chess_piece.cpp
 	${PROJECT_SOURCE_DIR}/core/pawn.cpp
 	${PROJECT_SOURCE_DIR}/core/rook.cpp
@@ -60,6 +60,8 @@ add_executable(tests
 if(DEFINE_QUEEN_EZ_IMP)
 	add_definitions(-DQUEEN_EZ_IMP)
 endif()
+
+set_property(TARGET debug PROPERTY CXX_STANDARD 17)
 
 target_link_libraries(tests PUBLIC
 	CppUTest

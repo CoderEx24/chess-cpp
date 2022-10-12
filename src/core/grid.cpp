@@ -59,7 +59,7 @@ void Grid::init_grid()
 
     for (int i = 0; i < 8; i ++)
 	    for (int j = 0; j < 8; j ++)
-		    this->fake_grid[i][j] = encode_piece(this->grid[i][j]);
+		    this->fake_grid[i][j].data = encode_piece(this->grid[i][j]);
 }
 
 Grid::Grid(PlaceCommand *commands, int size)
