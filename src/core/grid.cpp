@@ -8,23 +8,18 @@ void Grid::init_grid()
     /* std::cout << "hash of (1, 2) = " << std::hash<Position>()(Position(1, 2)) << '\n'; */
 
     this->grid = new AbstractChessPiece**[8];
-    this->fake_grid = new PieceColor*[8];
+    this->fake_grid = new FakeChessPiece*[8];
     this->white_pieces = new std::vector<AbstractChessPiece*>(16);
     this->black_pieces = new std::vector<AbstractChessPiece*>(16);
 
     for (int i = 0; i < 8; i ++)
     {
         this->grid[i] = new AbstractChessPiece*[8];
-        this->fake_grid[i] = new PieceColor[8];
-
-        std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
-        std::fill(this->grid[i], this->grid[i] + 8, nullptr);
+        this->fake_grid[i] = new FakeChessPiece[8];
+	
+	std::fill(this->grid[i], this->grid[i] + 8, nullptr);
+	std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
     }
-
-    std::fill(this->fake_grid[0], this->fake_grid[0] + 8, BLACK);
-    std::fill(this->fake_grid[1], this->fake_grid[1] + 8, BLACK);
-    std::fill(this->fake_grid[6], this->fake_grid[6] + 8, WHITE);
-    std::fill(this->fake_grid[7], this->fake_grid[7] + 8, WHITE);
 
     for (int i = 0; i < 8; i ++)
     {
@@ -61,14 +56,18 @@ void Grid::init_grid()
 
     std::copy(this->grid[6], this->grid[6] + 8, this->white_pieces->begin());
     std::copy(this->grid[7], this->grid[7] + 8, this->white_pieces->begin() + 8);
+
+    for (int i = 0; i < 8; i ++)
+	    for (int j = 0; j < 8; j ++)
+		    this->fake_grid[i][j] = encode_piece(this->grid[i][j]);
 }
 
 Grid::Grid(PlaceCommand *commands, int size)
 {
-    int white_count = 0, black_count = 0;
+	int white_count = 0, black_count = 0;
 
     this->grid = new AbstractChessPiece**[8];
-    this->fake_grid = new PieceColor*[8];
+    this->fake_grid = new FakeChessPiece*[8];
 
     this->white_pieces = new std::vector<AbstractChessPiece*>(16);
     this->black_pieces = new std::vector<AbstractChessPiece*>(16);
@@ -78,46 +77,44 @@ Grid::Grid(PlaceCommand *commands, int size)
     for (int i = 0; i < 8; i ++)
     {
         this->grid[i] = new AbstractChessPiece*[8];
-        this->fake_grid[i] = new PieceColor[8];
+        this->fake_grid[i] = new FakeChessPiece[8];
 
         std::fill(this->grid[i], this->grid[i] + 8, nullptr);
         std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
     }
 
     for (int i = 0; i < size; i ++)
-    {
-        Position pos;
-        PieceType type;
-        PieceColor color;
-        Grid::decode(commands[i], pos, type, color);
+	{
+		FakeChessPiece piece;
+		piece.data = commands[i];	
 
-        AbstractChessPiece *new_piece = nullptr;
+		AbstractChessPiece *new_piece = nullptr;
 
-        switch (type)
+        switch (piece.type)
         {
             case PAWN:
-                new_piece = new Pawn(pos.x, pos.y, color);
+                new_piece = new Pawn(piece.x, piece.y, piece.color);
                 break;
 
             case ROOK:
-                new_piece = new Rook(pos.x, pos.y, color);
+                new_piece = new Rook(piece.x, piece.y, piece.color);
                 break;
 
             case KNIGHT:
-                new_piece = new Knight(pos.x, pos.y, color);
+                new_piece = new Knight(piece.x, piece.y, piece.color);
                 break;
 
             case BISHOP:
-                new_piece = new Bishop(pos.x, pos.y, color);
+                new_piece = new Bishop(piece.x, piece.y, piece.color);
                 break;
 
             case QUEEN:
-                new_piece = new Queen(pos.x, pos.y, color);
+                new_piece = new Queen(piece.x, piece.y, piece.color);
                 break;
 
             case KING:
-                new_piece = new King(pos.x, pos.y, color);
-                if (color == WHITE)
+                new_piece = new King(piece.x, piece.y, piece.color);
+                if (piece.color == WHITE)
                     this->white_king = dynamic_cast<King*>(new_piece);
                 else
                     this->black_king = dynamic_cast<King*>(new_piece);
@@ -125,11 +122,11 @@ Grid::Grid(PlaceCommand *commands, int size)
                 break;
         }
 
-        this->grid[pos.x][pos.y] = new_piece;
-        this->fake_grid[pos.x][pos.y] = color;
+        this->grid[piece.x][piece.y] = new_piece;
+        this->fake_grid[piece.x][piece.y] = piece.color;
 
-        std::vector<AbstractChessPiece*> *pieces_set = (color == WHITE) ? this->white_pieces : this->black_pieces;
-        (*pieces_set)[(color == WHITE) ? white_count++ : black_count++] = new_piece;
+        std::vector<AbstractChessPiece*> *pieces_set = (piece.color == WHITE) ? this->white_pieces : this->black_pieces;
+        (*pieces_set)[(piece.color == WHITE) ? white_count++ : black_count++] = new_piece;
 
     }
     this->white_pieces->resize(white_count);
@@ -188,7 +185,7 @@ bool Grid::move(const Position& piece, const Position& dest)
         return false;
 
     this->grid[piece.x][piece.y] = nullptr;
-    this->fake_grid[piece.x][piece.y] = EMPTY;
+    this->fake_grid[piece.x][piece.y] = encode_piece(0, 0, 0, 0);
 
     AbstractChessPiece *target = this->grid[dest.x][dest.y];
     if (target)
@@ -200,7 +197,7 @@ bool Grid::move(const Position& piece, const Position& dest)
 
     selected_piece->set_position(dest);
     this->grid[dest.x][dest.y] = selected_piece;
-    this->fake_grid[dest.x][dest.y] = this->current_turn;
+    this->fake_grid[dest.x][dest.y] = encode_piece(selected_piece);
 
     this->current_turn = (this->current_turn == WHITE ? BLACK : WHITE);
 

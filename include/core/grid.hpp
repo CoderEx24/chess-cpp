@@ -27,8 +27,8 @@ class Grid
 		bool game_over;
 		PieceColor current_turn, winner;
 		King *threatened_king, *white_king, *black_king;
-        std::unordered_map<Position, std::vector<Position>> current_possible_moves;
-        std::vector<AbstractChessPiece*> *white_pieces, *black_pieces;
+        	std::unordered_map<Position, std::vector<Position>> current_possible_moves;
+        	std::vector<AbstractChessPiece*> *white_pieces, *black_pieces;
 
 		void init_grid();
 
@@ -36,22 +36,7 @@ class Grid
 		Grid(): current_turn(WHITE), threatened_king(nullptr) { init_grid(); }
 		Grid(PieceColor turn): current_turn(turn), threatened_king(nullptr) { init_grid(); }
 		Grid(PlaceCommand *commands, int size);
-        ~Grid();
-
-		inline static PlaceCommand encode(Position pos, PieceType type, PieceColor color)
-        {
-            return pos.x |
-                (pos.y << 3) |
-                (type << 6) |
-                ((color - 1) << 9);
-        }
-
-        inline static void decode(PlaceCommand cmd, Position& pos, PieceType& type, PieceColor& color)
-        {
-            pos   = Position(cmd & 0b111, (cmd & 0b111000) >> 3);
-            type  = (cmd & 0b111000000) >> 6;
-            color = 1 + ((cmd & 0b1000000000) >> 9);
-        }
+        	~Grid();
 
 		bool is_game_over() const { return game_over; }
 		PieceColor get_winner() const { return winner; }

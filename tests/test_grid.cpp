@@ -177,10 +177,15 @@ TEST(TestGrid, test_custom_grids)
 	// test 1
 	// place 4 pawns the first row
 	PlaceCommand grid1_commands [] {
-		Grid::encode(Position(0, 0), PAWN, WHITE),
+		/*encode_piece(Position(0, 0), PAWN, WHITE),
 		Grid::encode(Position(0, 1), PAWN, BLACK),
 		Grid::encode(Position(0, 2), PAWN, WHITE),
-		Grid::encode(Position(0, 3), PAWN, BLACK)
+		Grid::encode(Position(0, 3), PAWN, BLACK)*/
+
+		encode_piece(WHITE, PAWN, 0, 0),
+		encode_piece(BLACK, PAWN, 0, 1),
+		encode_piece(WHITE, PAWN, 0, 2),
+		encode_piece(BLACK, PAWN, 0, 3)
 	};
 
 	DummyGrid grid1(grid1_commands, 4);
@@ -261,7 +266,7 @@ TEST(TestGrid, test_custom_grids)
 
 	// test 2
 	// place a king in the middle of the board
-	PlaceCommand grid2_commands[] { Grid::encode(Position(3, 3), KING, WHITE) };
+	PlaceCommand grid2_commands[] { encode_piece(WHITE, KING, 3, 3) };
 
 	DummyGrid grid2(grid2_commands, 1);
 
@@ -581,8 +586,11 @@ TEST(TestGrid, test_move_king)
 TEST(TestGrid, test_attacking_king_positions)
 {
     PlaceCommand grid_build[] {
-        Grid::encode(Position(4, 3), KING, WHITE),
-        Grid::encode(Position(2, 5), ROOK, BLACK),
+        /*Grid::encode(Position(4, 3), KING, WHITE),
+        Grid::encode(Position(2, 5), ROOK, BLACK),*/
+
+	encode_piece(WHITE, KING, 4, 3),
+	encode_piece(BLACK, ROOK, 2, 5)
     };
 
     DummyGrid grid(grid_build, 2);

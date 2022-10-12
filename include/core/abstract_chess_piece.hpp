@@ -32,6 +32,12 @@ union FakeChessPiece
 	};
 	
 	uint16_t data: 11;
+
+	FakeChessPiece operator=(int rhs)
+	{
+		this->data = rhs;
+		return *this;
+	}
 };
 
 inline uint16_t encode_piece(PieceColor color, PieceType type, int x, int y)
@@ -107,7 +113,7 @@ class AbstractChessPiece
 
 inline uint16_t encode_piece(const AbstractChessPiece* piece)
 {
-	return encode_piece(piece->get_color(), piece->get_type(), piece->get_position());
+	return (piece) ? encode_piece(piece->get_color(), piece->get_type(), piece->get_position()) : encode_piece(-1, 0, 0, 0);
 }
 
 #endif
