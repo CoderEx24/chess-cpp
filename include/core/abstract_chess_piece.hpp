@@ -27,8 +27,8 @@ union FakeChessPiece
 	{
 		PieceColor color: 2;
 		PieceType type: 3;
-		int x: 3;
-		int y: 3;
+		unsigned int x: 3;
+		unsigned int y: 3;
 	};
 	
 	uint16_t data: 11;

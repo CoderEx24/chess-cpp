@@ -18,7 +18,7 @@ void Grid::init_grid()
         this->fake_grid[i] = new FakeChessPiece[8];
 	
 	std::fill(this->grid[i], this->grid[i] + 8, nullptr);
-	std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
+	std::fill(this->fake_grid[i], this->fake_grid[i] + 8, encode_piece(nullptr));
     }
 
     for (int i = 0; i < 8; i ++)
