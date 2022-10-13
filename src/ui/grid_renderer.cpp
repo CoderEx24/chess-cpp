@@ -1,5 +1,8 @@
 #include "ui/grid_renderer.hpp"
 
+#include <iomanip>
+#include <sstream>
+
 void GridRenderer::render(tgui::Canvas::Ptr target)
 {
 	if (!this->state_changed)
@@ -30,6 +33,8 @@ void GridRenderer::render(tgui::Canvas::Ptr target)
 	FakeGrid grid = this->grid.get_fake_grid();
 
 	sf::Text letters[6];
+	sf::Font font;
+	font.loadFromFile("/usr/share/fonts/TTF/Hack-Bold.ttf");
 
 	letters[0].setString(sf::String("P"));
 	letters[1].setString(sf::String("R"));
@@ -38,24 +43,29 @@ void GridRenderer::render(tgui::Canvas::Ptr target)
 	letters[4].setString(sf::String("Q"));
 	letters[5].setString(sf::String("K"));
 
+	for (int i = 0; i < 6; i ++)
+		letters[i].setFont(font);
+
+	int piece_count = 0;
 	for (int i = 0; i < 8; i ++)
 		for (int j = 0; j < 8; j ++)
 		{
 			FakeChessPiece piece = grid[i][j];
 
-			if (piece.color == -1)
+			if (piece.data == 0x7ff)
 				continue;
 
-			std::cout << "Piece type = " << piece.type << '\n';
-			sf::Text text = letters[piece.type];
-			text.setColor((piece.color == WHITE) ? sf::Color::White : sf::Color::Black);
-			text.setPosition(piece.x * tile_size.x, piece.y * tile_size.y);
+			piece_count ++;
+			
+			sf::Text text(letters[piece.type]);
+
+			text.setFillColor((piece.color == WHITE) ? sf::Color::White : sf::Color::Black);
+			text.setOutlineColor((piece.color == WHITE) ? sf::Color::Black : sf::Color::White);
+			text.setOutlineThickness(2);
+			text.setPosition(piece.y * tile_size.y,	piece.x * tile_size.x);
 
 			target->draw(text);
 		}
-
-	for (int i = 0; i < 8; i ++)
-		for (int j = 0; j < 8; j ++)
 
 
 	target->display();
