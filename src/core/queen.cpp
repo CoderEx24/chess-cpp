@@ -48,7 +48,7 @@ const std::vector<Position>& Queen::get_valid_positions(FakeGrid occupied_positi
 		if (is_blocked[i % 8]) continue;
 
 		if (!in_bounds(point_to_add) || 
-				occupied_positions[point_to_add.x][point_to_add.y].color != EMPTY)
+				occupied_positions[point_to_add.x][point_to_add.y].data != 0x7ff)
 			is_blocked[i % 8] = true;
 
 		if (in_bounds(point_to_add) &&

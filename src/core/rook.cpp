@@ -18,7 +18,7 @@ const std::vector<Position>& Rook::get_valid_positions(FakeGrid occupied_positio
 		point_to_add = this->pos + OFFSETS[i % 4] * ((i / 4) + 1);
 
 		if (!in_bounds(point_to_add) ||
-				occupied_positions[point_to_add.x][point_to_add.y].color != EMPTY)
+				occupied_positions[point_to_add.x][point_to_add.y].data != 0x7ff)
 			is_blocked[i % 4] = true;
 
 		if (in_bounds(point_to_add) &&

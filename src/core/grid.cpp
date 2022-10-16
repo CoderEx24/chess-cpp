@@ -21,7 +21,7 @@ void Grid::init_grid()
 	std::fill(this->fake_grid[i], this->fake_grid[i] + 8, encode_piece(nullptr));
     }
 
-    for (int i = 0; i < 8; i ++)
+    for (int i = 5; i < 8; i ++)
     {
         this->grid[1][i] = new Pawn(1, i, BLACK);
         this->grid[6][i] = new Pawn(6, i, WHITE);
@@ -222,6 +222,9 @@ const std::vector<Position>* Grid::get_possible_moves(const Position& piece)
         delete pos_list;
 
         AbstractChessPiece *the_piece = this->grid[piece.x][piece.y];
+
+	std::cout << "selected piece (Color: " << str_piececolor(the_piece->get_color())
+	       	<< ", type: " << str_piecetype(the_piece->get_type()) << ")\n";
 
         pos_list = new std::vector<Position>(the_piece->get_valid_positions(this->fake_grid));
 
