@@ -16,12 +16,14 @@ void Grid::init_grid()
     {
         this->grid[i] = new AbstractChessPiece*[8];
         this->fake_grid[i] = new FakeChessPiece[8];
+
+	for (int j = 0; j < 8; j ++)
+		this->fake_grid[i][j].data = EMPTY;
 	
 	std::fill(this->grid[i], this->grid[i] + 8, nullptr);
-	std::fill(this->fake_grid[i], this->fake_grid[i] + 8, encode_piece(nullptr));
     }
 
-    for (int i = 5; i < 8; i ++)
+    for (int i = 0; i < 8; i ++)
     {
         this->grid[1][i] = new Pawn(1, i, BLACK);
         this->grid[6][i] = new Pawn(6, i, WHITE);
@@ -79,8 +81,10 @@ Grid::Grid(PlaceCommand *commands, int size)
         this->grid[i] = new AbstractChessPiece*[8];
         this->fake_grid[i] = new FakeChessPiece[8];
 
+	for (int j = 0; j < 8; j ++)
+		this->fake_grid[i][j].data = EMPTY;
+
         std::fill(this->grid[i], this->grid[i] + 8, nullptr);
-        std::fill(this->fake_grid[i], this->fake_grid[i] + 8, EMPTY);
     }
 
     for (int i = 0; i < size; i ++)
@@ -123,7 +127,7 @@ Grid::Grid(PlaceCommand *commands, int size)
         }
 
         this->grid[piece.x][piece.y] = new_piece;
-        this->fake_grid[piece.x][piece.y] = piece.color;
+        this->fake_grid[piece.x][piece.y].data = piece.data;
 
         std::vector<AbstractChessPiece*> *pieces_set = (piece.color == WHITE) ? this->white_pieces : this->black_pieces;
         (*pieces_set)[(piece.color == WHITE) ? white_count++ : black_count++] = new_piece;
@@ -185,7 +189,7 @@ bool Grid::move(const Position& piece, const Position& dest)
         return false;
 
     this->grid[piece.x][piece.y] = nullptr;
-    this->fake_grid[piece.x][piece.y] = encode_piece(0, 0, 0, 0);
+    this->fake_grid[piece.x][piece.y].data = EMPTY; 
 
     AbstractChessPiece *target = this->grid[dest.x][dest.y];
     if (target)
@@ -197,7 +201,7 @@ bool Grid::move(const Position& piece, const Position& dest)
 
     selected_piece->set_position(dest);
     this->grid[dest.x][dest.y] = selected_piece;
-    this->fake_grid[dest.x][dest.y] = encode_piece(selected_piece);
+    this->fake_grid[dest.x][dest.y].data = encode_piece(selected_piece);
 
     this->current_turn = (this->current_turn == WHITE ? BLACK : WHITE);
 
@@ -222,9 +226,6 @@ const std::vector<Position>* Grid::get_possible_moves(const Position& piece)
         delete pos_list;
 
         AbstractChessPiece *the_piece = this->grid[piece.x][piece.y];
-
-	std::cout << "selected piece (Color: " << str_piececolor(the_piece->get_color())
-	       	<< ", type: " << str_piecetype(the_piece->get_type()) << ")\n";
 
         pos_list = new std::vector<Position>(the_piece->get_valid_positions(this->fake_grid));
 

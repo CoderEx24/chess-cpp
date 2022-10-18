@@ -6,8 +6,8 @@
 #include <cmath>
 
 #define EMPTY 0
-#define WHITE 1
-#define BLACK 2
+#define WHITE 0
+#define BLACK 1
 
 #define PAWN 	0x0
 #define ROOK 	0x1
@@ -25,7 +25,8 @@ union FakeChessPiece
 {
 	struct
 	{
-		PieceColor color: 2;
+		bool empty: 1;
+		PieceColor color: 1;
 		PieceType type: 3;
 		unsigned int x: 3;
 		unsigned int y: 3;
@@ -33,16 +34,11 @@ union FakeChessPiece
 	
 	uint16_t data: 11;
 
-	FakeChessPiece operator=(int rhs)
-	{
-		this->data = rhs;
-		return *this;
-	}
 };
 
 inline uint16_t encode_piece(PieceColor color, PieceType type, int x, int y)
 {
-	return color |
+	return  (color << 1) |
 		(type << 2) |
 		(x << 5) |
 		(y << 8);
@@ -113,7 +109,7 @@ class AbstractChessPiece
 
 inline uint16_t encode_piece(const AbstractChessPiece* piece)
 {
-	return (piece) ? encode_piece(piece->get_color(), piece->get_type(), piece->get_position()) : encode_piece(-1, 0, 0, 0);
+	return (piece) ? encode_piece(piece->get_color(), piece->get_type(), piece->get_position()) : EMPTY;
 }
 
 #endif

@@ -18,16 +18,8 @@ const std::vector<Position>& Bishop::get_valid_positions(FakeGrid occupied_posit
 
 		point_to_add = this->pos + OFFSETS[i % 4] * ((i / 4) + 1);
 		
-		if (!in_bounds(point_to_add) || occupied_positions[point_to_add.x][point_to_add.y].data != 0x7ff)
-		{
-			if (in_bounds(point_to_add))
-			std::cout << "direction " << i << " is blocked by piece [Type: "
-				<< str_piecetype(occupied_positions[point_to_add.x][point_to_add.y].type)
-				<< ", Color: " << str_piececolor(occupied_positions[point_to_add.x][point_to_add.y].color)
-				<< ", Pos: (" << occupied_positions[point_to_add.x][point_to_add.y].x
-				<< ", " << occupied_positions[point_to_add.x][point_to_add.y].y << ")]\n";
-			is_blocked[i % 4] = true;
-		}
+		if (!in_bounds(point_to_add) || !occupied_positions[point_to_add.x][point_to_add.y].empty)
+				is_blocked[i % 4] = true;
 
 		if (in_bounds(point_to_add) && 
 				occupied_positions[point_to_add.x][point_to_add.y].color != this->color)
